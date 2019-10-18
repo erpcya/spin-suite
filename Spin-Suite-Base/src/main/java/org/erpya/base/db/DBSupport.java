@@ -18,6 +18,7 @@ package org.erpya.base.db;
 
 import org.erpya.base.util.Criteria;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,4 +65,11 @@ public interface DBSupport {
      * @return
      */
     boolean isOpen();
+
+    /**
+     * Get Date from DB value
+     * @param value
+     * @return
+     */
+    Date convetToDate(String value);
 }

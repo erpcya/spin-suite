@@ -19,9 +19,12 @@ package org.erpya.base.util;
 
 import android.util.Log;
 
+import org.erpya.base.db.DBManager;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Value Util allows cast class
@@ -125,8 +128,15 @@ public class ValueUtil {
      */
     public static Date getValueAsDate(Object value) {
         if (value != null) {
-            if (value instanceof Date)
+            if (value instanceof Date) {
                 return (Date) value;
+            } else if(value instanceof String) {
+                try {
+                    return DBManager.getInstance(Env.getContext()).convetToDate((String) value);
+                } catch (Exception e) {
+                    LogM.log(Env.getContext(), ValueUtil.class.getName(), Level.FINE, e.getMessage());
+                }
+            }
         }
         return null;
     }

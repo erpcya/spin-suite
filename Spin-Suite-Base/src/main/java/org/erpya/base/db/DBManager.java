@@ -26,6 +26,7 @@ import org.erpya.base.util.Env;
 import org.erpya.base.util.Util;
 
 import java.lang.reflect.Constructor;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -210,5 +211,15 @@ public final class DBManager {
         }
         //  Get Map
         return database.getListMap(criteria);
+    }
+
+    /**
+     * Convert a DB value to date
+     * @param value
+     * @return
+     * @throws Exception
+     */
+    public Date convetToDate(String value) throws Exception {
+        return getDatabase().convetToDate(value);
     }
 }

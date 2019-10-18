@@ -95,18 +95,18 @@ public class PersistenceListAdapter extends ArrayAdapter {
             try {
                 Criteria criteria = new Criteria();
                 criteria.addCriteria(POInfo.METADATA_TABLE_NAME, Condition.EQUAL, fieldDefinition.getTableName());
-                criteria.addCriteria(POInfo.DISPLAY_VALUE_KEY, Condition.LIKE, searchValue);
+                criteria.addCriteria(fieldDefinition.getDisplayColumnName(), Condition.LIKE, "%" + searchValue + "%");
                 //  Load Criteria
                 List<Map<String, Object>> resultAsList = DBManager.getInstance(getContext()).getListMap(criteria);
                 //  Validate Attributes
                 if(resultAsList == null) {
                     return values;
                 }
-                String dicplayColumnName = fieldDefinition.getDisplayColumnName();
+                String displayColumnName = fieldDefinition.getDisplayColumnName();
                 //  Populate
                 resultAsList.stream().forEach(value -> {
                     String uuid = ValueUtil.getValueAsString(value.get(POInfo.ID_KEY));
-                    String displayValue = ValueUtil.getValueAsString(value.get(dicplayColumnName));
+                    String displayValue = ValueUtil.getValueAsString(value.get(displayColumnName));
                     if(Util.isEmpty(displayValue)) {
                         displayValue = value.values().stream().map(objectValue -> ValueUtil.getValueAsString(objectValue))
                                 .collect(Collectors.joining("_", "<", ">"));

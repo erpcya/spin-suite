@@ -59,6 +59,20 @@ public class AddDeviceWizard extends Wizard implements WizardEventListener {
                         .withMandatory(false)
                         .withDisplayType(DisplayType.TEXT_LONG)
                         .getFieldDefinition())
+                .withAdditionalField(FieldFactory.createField(AddDeviceWizard.this)
+                        .withColumnName("DeviceStartDate")
+                        .withName("Start Date")
+                        .withMandatory(true)
+                        .withUpdateable(true)
+                        .withDisplayType(DisplayType.DATE)
+                        .getFieldDefinition())
+                .withAdditionalField(FieldFactory.createField(AddDeviceWizard.this)
+                        .withColumnName("DeviceStartTime")
+                        .withName("Start Time")
+                        .withMandatory(true)
+                        .withUpdateable(true)
+                        .withDisplayType(DisplayType.TIME)
+                        .getFieldDefinition())
                 .getStep();
         addStep(deviceDefinitionStep);
         //  WIFI Info Step

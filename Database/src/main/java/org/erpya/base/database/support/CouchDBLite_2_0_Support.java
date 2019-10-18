@@ -27,6 +27,7 @@ import com.couchbase.lite.DatabaseConfiguration;
 import com.couchbase.lite.Dictionary;
 import com.couchbase.lite.Endpoint;
 import com.couchbase.lite.Expression;
+import com.couchbase.lite.Function;
 import com.couchbase.lite.Meta;
 import com.couchbase.lite.MutableDocument;
 import com.couchbase.lite.Query;
@@ -39,6 +40,7 @@ import com.couchbase.lite.Result;
 import com.couchbase.lite.ResultSet;
 import com.couchbase.lite.SelectResult;
 import com.couchbase.lite.URLEndpoint;
+import com.couchbase.lite.internal.utils.DateUtils;
 
 import org.erpya.base.db.DBSupport;
 import org.erpya.base.model.POInfo;
@@ -143,8 +145,9 @@ public class CouchDBLite_2_0_Support implements DBSupport {
         //  Save document
         database.save(mutableDocument);
         id = mutableDocument.getId();
+//        20.12.0.23
         // Create replicators to push and pull changes to and from the cloud.
-        Endpoint targetEndpoint = new URLEndpoint(new URI("ws://20.12.0.23:4984/" + DATABASE_NAME));
+        Endpoint targetEndpoint = new URLEndpoint(new URI("ws://192.168.43.136:4984/" + DATABASE_NAME));
         ReplicatorConfiguration replConfig = new ReplicatorConfiguration(database, targetEndpoint);
         replConfig.setReplicatorType(ReplicatorConfiguration.ReplicatorType.PUSH_AND_PULL);
 
@@ -198,6 +201,7 @@ public class CouchDBLite_2_0_Support implements DBSupport {
             Log.i("Sample", String.format("type -> %s", attributes.getString("type")));
             String id = result.getString(POInfo.ID_KEY);
             Map<String, Object> mapResult = attributes.toMap();
+            result.getDate("");
             if(!Util.isEmpty(id)) {
                 mapResult.put(POInfo.ID_KEY, id);
             }
@@ -320,8 +324,15 @@ public class CouchDBLite_2_0_Support implements DBSupport {
                     expression = expression.and(Expression.property(condition.getKeyAttribute())
                             .in(getExpressionValueAsArray(condition.getValue())));
                 }
+            } else if(condition.getComparator().equals(Condition.LIKE)) {
+                if(expression == null) {
+                    expression = Function.upper(Expression.property(condition.getKeyAttribute()))
+                            .like(Function.upper(getExpressionValue(condition.getValue())));
+                } else {
+                    expression = expression.and(Function.upper(Expression.property(condition.getKeyAttribute()))
+                            .like(Function.upper(getExpressionValue(condition.getValue()))));
+                }
             }
-            //  TODO: add support to like operator
         }
         //  Return
         return expression;
@@ -383,5 +394,10 @@ public class CouchDBLite_2_0_Support implements DBSupport {
     @Override
     public boolean isOpen() {
         return database != null;
+    }
+
+    @Override
+    public Date convetToDate(String value) {
+        return DateUtils.fromJson(value);
     }
 }
