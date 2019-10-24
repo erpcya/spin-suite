@@ -1,1 +1,1 @@
-include ':Spin-Suite-App', ':Spin-Suite-Base', ':Device-Management', ':Printing', ':Database', ':Component', ':Arduino', ':Arduino-RemoteSetup'
+include ':Sales', ':Base', ':Device-Management', ':Printing', ':Database', ':Component', ':Arduino', ':Arduino-RemoteSetup', ':Security', ':Server-Access'

@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    implementation project(path: ':Spin-Suite-Base')
+    implementation project(path: ':Base')
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:support-v4:27.1.1'
     implementation 'com.android.support:support-v13:27.1.1'

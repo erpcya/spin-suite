@@ -31,7 +31,7 @@ android {
 dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation project(path: ':Spin-Suite-Base')
+    implementation project(path: ':Base')
 }
 
 task deleteJar(type: Delete) {

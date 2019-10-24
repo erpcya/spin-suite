@@ -31,7 +31,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.3'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation project(path: ':Spin-Suite-Base')
+    implementation project(path: ':Base')
     implementation project(path: ':Device-Management')
     implementation files('libs/hsm-android-print.jar')
 }

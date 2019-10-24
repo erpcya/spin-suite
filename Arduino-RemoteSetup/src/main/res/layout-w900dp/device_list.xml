@@ -10,7 +10,7 @@
     android:divider="?android:attr/dividerHorizontal"
     android:orientation="horizontal"
     android:showDividers="middle"
-    tools:context="org.erpya.app.spinsuite.arduino.DeviceListActivity">
+    tools:context="org.erpya.app.sales.arduino.DeviceListActivity">
 
     <!--
     This layout is a two-pane layout for the Devices
@@ -27,7 +27,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         app:layoutManager="LinearLayoutManager"
-        tools:context="org.erpya.app.spinsuite.org.erpya.app.spinsuite.arduino.DeviceListActivity"
+        tools:context="org.erpya.app.sales.org.erpya.app.spinsuite.arduino.DeviceListActivity"
         tools:listitem="@layout/device_list_content" />
 
     <FrameLayout
