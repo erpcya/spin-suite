@@ -18,9 +18,11 @@ package org.erpya.security.ui.login;
 import android.app.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -34,10 +36,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.erpya.security.R;
+import org.erpya.security.ui.register.Register;
 
 public class Login extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
+    private Button loginButton;
+    private Button registerButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,8 +52,9 @@ public class Login extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         final EditText usernameEditText = findViewById(R.id.username);
-        final EditText passwordEditText = findViewById(R.id.password);
-        final Button loginButton = findViewById(R.id.login);
+        final TextInputEditText passwordEditText = findViewById(R.id.password);
+        loginButton = findViewById(R.id.login);
+        registerButton = findViewById(R.id.register);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -76,14 +82,14 @@ public class Login extends AppCompatActivity {
                 loadingProgressBar.setVisibility(View.GONE);
                 if (loginResult.getError() != null) {
                     showLoginFailed(loginResult.getError());
+                    loginButton.setEnabled(true);
+                    registerButton.setEnabled(true);
                 }
                 if (loginResult.getSuccess() != null) {
                     updateUiWithUser(loginResult.getSuccess());
+                    setResult(Activity.RESULT_OK);
+                    finish();
                 }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
             }
         });
 
@@ -111,7 +117,7 @@ public class Login extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
+                    loginModel(usernameEditText.getText().toString(),
                             passwordEditText.getText().toString());
                 }
                 return false;
@@ -122,10 +128,30 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
+                loginModel(usernameEditText.getText().toString(),
                         passwordEditText.getText().toString());
             }
         });
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, Register.class);
+                startActivity(intent);
+                setResult(Activity.RESULT_OK);
+                finish();
+            }
+        });
+    }
+
+    /**
+     * Login from user and password
+     * @param userName
+     * @param password
+     */
+    private void loginModel(String userName, String password) {
+        loginButton.setEnabled(false);
+        registerButton.setEnabled(false);
+        loginViewModel.login(userName, password);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {

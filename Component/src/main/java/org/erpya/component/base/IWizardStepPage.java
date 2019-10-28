@@ -16,7 +16,7 @@
 package org.erpya.component.base;
 
 /**
- * Contract for determine standard methods to be implemented for Fragments used on Wizard
+ * Contract for determine standard methods to be implemented for Fragments used on WindowManager
  */
 public interface IWizardStepPage {
 
@@ -24,5 +24,11 @@ public interface IWizardStepPage {
      * This method is called from next action buttom
      * @return true if is ok
      */
-    boolean validateStep();
+    boolean validate();
+
+    /**
+     * This method is called if all is ok
+     * @return
+     */
+    boolean save();
 }

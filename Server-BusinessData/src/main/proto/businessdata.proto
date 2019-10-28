@@ -1,0 +1,397 @@
+/************************************************************************************
+ * Copyright (C) 2012-2018 E.R.P. Consultores y Asociados, C.A.                     *
+ * Contributor(s): Yamel Senih ysenih@erpya.com                                     *
+ * This program is free software: you can redistribute it and/or modify             *
+ * it under the terms of the GNU General Public License as published by             *
+ * the Free Software Foundation, either version 2 of the License, or                *
+ * (at your option) any later version.                                              *
+ * This program is distributed in the hope that it will be useful,                  *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the                     *
+ * GNU General Public License for more details.                                     *
+ * You should have received a copy of the GNU General Public License                *
+ * along with this program.	If not, see <https://www.gnu.org/licenses/>.            *
+ ************************************************************************************/
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.spin.grpc.util";
+option java_outer_classname = "ADempiereData";
+option objc_class_prefix = "HLW";
+
+package data;
+
+// The greeting service definition.
+service BusinessDataService {
+	// Get a Entity
+	rpc GetEntity(GetEntityRequest) returns (Entity) {}
+	// Create Entity Request
+	rpc CreateEntity(CreateEntityRequest) returns (Entity) {}
+	// Update Entity Request
+	rpc UpdateEntity(UpdateEntityRequest) returns (Entity) {}
+	// Delete Entity Request
+	rpc DeleteEntity(DeleteEntityRequest) returns (Empty) {}
+	// Rollback Entity Request
+	rpc RollbackEntity(RollbackEntityRequest) returns (Entity) {}
+	// List a Entities
+	rpc ListEntities(ListEntitiesRequest) returns (ListEntitiesResponse) {}
+	// Get Lookup Item
+	rpc GetLookupItem(GetLookupItemRequest) returns (LookupItem) {}
+	// List Lookup Item
+	rpc ListLookupItems(ListLookupItemsRequest) returns (ListLookupItemsResponse) {}
+	// Run a Callout
+	rpc RunCallout(RunCalloutRequest) returns (Callout) {}
+	//	Request a BusinessProcess / Report
+	rpc RunBusinessProcess(RunBusinessProcessRequest) returns (BusinessProcess) {}
+	//	Request Browser Data
+	rpc ListBrowserItems(ListBrowserItemsRequest) returns (ListBrowserItemsResponse) {}
+	//	Request BusinessProcess Activity from current session
+	rpc ListActivities(ListActivitiesRequest) returns (ListActivitiesResponse) {}
+	//	Request Recent Items
+	rpc ListRecentItems(ListRecentItemsRequest) returns (ListRecentItemsResponse) {}
+	// List a References
+	rpc ListReferences(ListReferencesRequest) returns (ListReferencesResponse) {}
+}
+
+// The client request contains client info for request.
+message ClientRequest {
+	string sessionUuid = 1;
+	string language = 2;
+}
+
+// Get Entity Request
+message GetEntityRequest {
+	string uuid = 1;
+	string tableName = 2;
+	int32 recordId = 3;
+	ClientRequest clientRequest = 4;
+	// Query
+	Criteria criteria = 5;
+}
+
+// Create Entity Request
+message CreateEntityRequest {
+	ClientRequest clientRequest = 1;
+	string tableName = 2;
+	repeated KeyValue attributes = 3;
+}
+
+//  Empty message
+message Empty {
+	
+}
+
+//  Empty message
+message RollbackEntityRequest {
+	ClientRequest clientRequest = 1;
+	string tableName = 2;
+	int32 recordId = 3;
+	enum EventType {
+		INSERT = 0;
+		UPDATE = 1;
+		DELETE = 2;
+	}
+	EventType eventType = 4;
+}
+
+// Update Entity Request
+message UpdateEntityRequest {
+	ClientRequest clientRequest = 1;
+	string tableName = 2;
+	string uuid = 3;
+	int32 recordId = 4;
+	repeated KeyValue attributes = 5;
+}
+
+// Delete Entity Request
+message DeleteEntityRequest {
+	ClientRequest clientRequest = 1;
+	string tableName = 2;
+	string uuid = 3;
+	int32 recordId = 4;
+}
+
+// Browsers List
+message ListBrowserItemsResponse {
+	int64 recordCount = 1;
+	repeated Entity records = 2;
+	string next_page_token = 3;
+}
+
+// Value Object from ADempiere
+message Entity {
+	int32 id = 1;
+	string uuid = 2;
+	string tableName = 3;
+	map<string, Value> values = 4;
+}
+
+//	BusinessProcess Selections
+message KeyValueSelection {
+	int32 selectionId = 1;
+	repeated KeyValue values = 2;
+}
+
+// Key and Value pairs
+message KeyValue {
+	string key = 1;
+	Value value = 2;
+}
+
+// Define value for object
+message Value {
+	int32 intValue = 1;
+	int64 longValue = 2;
+	double doubleValue = 3;
+	bool booleanValue = 4;
+	string stringValue = 5;
+	enum ValueType {
+		INTEGER = 0;
+		LONG = 1;
+		DOUBLE = 2;
+		BOOLEAN = 3;
+		STRING = 4;
+		DATE = 5;
+	}
+	ValueType valueType = 6;
+}
+
+// Get Lookup Item
+message GetLookupItemRequest {
+	int32 id = 1;
+	string uuid = 2;
+	ClientRequest clientRequest = 3;
+	// Query
+	Criteria criteria = 4;
+}
+
+// Lookup Item Response
+message LookupItem {
+	int32 id = 1;
+	string uuid = 2;
+	string tableName = 3;
+	map<string, Value> values = 4;
+}
+
+// List Lookup Item
+message ListLookupItemsRequest {
+	ClientRequest clientRequest = 3;
+	// Query
+	Criteria criteria = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// List Lookup Item Response
+message ListLookupItemsResponse {
+	int64 recordCount = 1;
+	repeated LookupItem records = 2;
+	string next_page_token = 3;
+}
+
+// List Entities Request
+message ListEntitiesRequest {
+	ClientRequest clientRequest = 3;
+	// Query
+	Criteria criteria = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// List Entities Response
+message ListEntitiesResponse {
+	int64 recordCount = 1;
+	repeated Entity records = 2;
+	string next_page_token = 3;
+}
+
+// Query for Request Object
+message Criteria {
+	string tableName = 1;
+	string query = 2;
+	string whereClause = 3;
+	string orderByClause = 4;
+	string referenceUuid = 5;
+	repeated Condition conditions = 6;
+	repeated Value values = 7;
+	repeated OrderByProperty orderByColumn = 8;
+	int64 limit = 9;
+}
+
+// Order By Property
+message OrderByProperty {
+	string columnName = 1;
+	enum OrderType {
+		ASCENDING = 0;
+		DESCENDING = 1;
+	}
+	//	Operators
+	OrderType orderType = 2;
+}
+
+// Condition for query data
+message Condition {
+	string columnName = 1;
+	Value value = 2;
+	Value valueTo = 3;
+	repeated Value values = 4;
+	enum Operator {
+		EQUAL = 0;
+		NOT_EQUAL = 1;
+		LIKE = 2;
+		NOT_LIKE = 3;
+		GREATER = 4;
+		GREATER_EQUAL = 5;
+		LESS = 6;
+		LESS_EQUAL = 7;
+		BETWEEN = 8;
+		NOT_NULL = 9;
+		NULL = 10;
+		IN = 11;
+		NOT_IN = 12;
+	}
+	//	Operators
+	Operator operator = 5;
+}
+
+// Callout Request
+message RunCalloutRequest {
+	ClientRequest clientRequest = 1;
+	string callout = 2;
+	Entity Entity = 3;
+}
+
+// Callout response with data from server
+message Callout {
+	string result = 1;
+	Entity values = 2;
+}
+
+// BusinessProcess Request
+message RunBusinessProcessRequest {
+	ClientRequest clientRequest = 1;
+	string tableName = 2;
+	string uuid = 3;
+	int32 recordId = 4;
+	int32 tableSelectedId = 5;
+	string reportType = 6;
+	repeated KeyValue parameters = 7;
+	repeated KeyValueSelection selections = 8;
+}
+
+// BusinessProcess Activity Request
+message ListActivitiesRequest {
+	ClientRequest clientRequest = 1;
+	string userUuid = 2;
+	string instanceUuid = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+// Recent Items Request
+message ListRecentItemsRequest {
+	ClientRequest clientRequest = 1;
+	bool currentSession = 2;
+	int32 page_size = 3;
+	string page_token = 4;
+}
+
+// Recent Item
+message RecentItem {
+	string menuUuid = 1;
+	string menuName = 2;
+	string menuDescription = 3;
+	string windowUuid = 4;
+	string tabUuid = 5;
+	int32 tableId = 6;
+	int32 recordId = 7;
+	string displayName = 8;
+	string recordUuid = 9;
+	int64 updated = 10;
+	string action = 11;
+}
+
+//	Recent Items List
+message ListRecentItemsResponse {
+	int64 recordCount = 1;
+	repeated RecentItem recentItems = 2;
+	string next_page_token = 3;
+}
+
+// BusinessProcess Response List
+message ListActivitiesResponse {
+	int64 recordCount = 1;
+	repeated BusinessProcess responses = 2;
+	string next_page_token = 3;
+}
+
+//	Response with log and values from server
+message BusinessProcess {
+	string uuid = 1;
+	string instanceUuid = 2;
+	bool isError = 3;
+	string summary = 4;
+	string resultTableName = 5;
+	bool isProcessing = 6;
+	int64 lastRun = 7;
+	repeated ProcessInfoLog logs = 8;
+	map<string, Value> parameters = 9;
+	ProcessOutput output = 10;
+}
+
+//	BusinessProcess Log result
+message ProcessInfoLog {
+	int32 recordId = 1;
+	string log = 2;
+}
+
+//	Used for get output from report / BusinessProcess like PDF, HTML another result for show to end user
+message ProcessOutput {
+	string uuid = 1;
+	string name = 2;
+	string description = 3;
+	string fileName = 4;
+	string output = 5;
+	string mimeType = 6;
+	bytes outputStream = 7;
+	//	Output Type
+	string reportType = 8;
+}
+
+// Browser request
+message ListBrowserItemsRequest {
+	string uuid = 1;
+	ClientRequest clientRequest = 2;
+	Criteria criteria = 3;
+	repeated KeyValue parameters = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// List References
+message ListReferencesRequest {
+	string uuid = 1;
+	string tableName = 2;
+	int32 recordId = 3;
+	string windowUuid = 4;
+	ClientRequest clientRequest = 5;
+	int32 page_size = 6;
+	string page_token = 7;
+}
+
+// List References Response
+message ListReferencesResponse {
+	int64 recordCount = 1;
+	repeated RecordReferenceInfo references = 2;
+	string next_page_token = 3;
+}
+
+// Zoom Information
+message RecordReferenceInfo {
+	string uuid = 1;
+	string windowUuid = 2;
+	string displayName = 3;
+	string tableName = 4;
+	string whereClause = 5;
+	int64 recordCount = 6;
+}

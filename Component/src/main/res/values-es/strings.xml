@@ -1,4 +1,8 @@
 <resources>
-    <string name="app_name">Component</string>
+    <string name="app_name">Spin-Suite</string>
     <string name="title_activity_wizard">Wizard</string>
+    <string name="title_activity_main_menu">Spin-Suite</string>
+    <string name="title_home">Principal</string>
+    <string name="title_dashboard">Tablero</string>
+    <string name="title_notifications">Notificaciones</string>
 </resources>

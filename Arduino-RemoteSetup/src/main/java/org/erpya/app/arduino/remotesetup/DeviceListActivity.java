@@ -29,7 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.erpya.app.arduino.initialsetup.AddDeviceWizard;
+import org.erpya.app.arduino.initialsetup.AddDeviceWindowManager;
 import org.erpya.base.arduino.supported.UNO;
 import org.erpya.base.database.support.CouchDBLite_2_0_Support;
 import org.erpya.base.device.util.DeviceManager;
@@ -109,7 +109,7 @@ public class DeviceListActivity extends AppCompatActivity {
                 criteria.addCriteria("DeviceAddress", Condition.EQUAL, item.id);
                 //  For table
                 Context context = view.getContext();
-                Intent intent = new Intent(context, AddDeviceWizard.class);
+                Intent intent = new Intent(context, AddDeviceWindowManager.class);
                 //  Set to arguments
                 intent.putExtra(Criteria.PARCEABLE_NAME, criteria);
                 context.startActivity(intent);

@@ -255,7 +255,7 @@ public class DisplayType {
     public static DecimalFormat getNumberFormat(Context context, int displayType, String pattern) {
         String language = org.erpya.base.util.Env.BASE_LANGUAGE;
         if(context != null)
-            language = org.erpya.base.util.Env.getContext(context, org.erpya.base.util.Env.LANGUAGE);
+            language = Env.getContext(Env.LANGUAGE);
         //
         Locale locale = org.erpya.base.util.Language.getLocale(language);
         DecimalFormat format = null;

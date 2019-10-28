@@ -20,12 +20,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import org.erpya.component.wizard.WizardStep;
+import org.erpya.component.window.Tab;
 
 /**
  * Custom Step for acknowledgment
  */
-public class DeviceAcknowledgment extends WizardStep {
+public class DeviceAcknowledgment extends Tab {
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -41,7 +41,7 @@ public class DeviceAcknowledgment extends WizardStep {
     }
 
     @Override
-    public boolean validateStep() {
-        return super.validateStep();
+    public boolean validate() {
+        return super.validate();
     }
 }

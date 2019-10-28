@@ -23,8 +23,8 @@ import android.util.Patterns;
 
 import org.erpya.security.data.LoginRepository;
 import org.erpya.security.data.Result;
-import org.erpya.security.data.model.LoggedInUser;
 import org.erpya.security.R;
+import org.erpya.security.data.model.SessionInfo;
 
 import java.lang.ref.WeakReference;
 
@@ -56,14 +56,14 @@ public class LoginViewModel extends ViewModel {
      * @param username
      * @param password
      */
-    private Result<LoggedInUser> loginModel(String username, String password) {
+    private Result<SessionInfo> loginModel(String username, String password) {
         return loginRepository.login(username, password);
     }
 
-    private void setResult(Result<LoggedInUser> result) {
+    private void setResult(Result<SessionInfo> result) {
         if (result instanceof Result.Success) {
-            LoggedInUser data = ((Result.Success<LoggedInUser>) result).getData();
-            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getDisplayName())));
+            SessionInfo data = ((Result.Success<SessionInfo>) result).getData();
+            loginResult.setValue(new LoginResult(new LoggedInUserView(data.getUserInfo().getDisplayName())));
         } else {
             loginResult.setValue(new LoginResult(R.string.login_failed));
         }
@@ -96,7 +96,7 @@ public class LoginViewModel extends ViewModel {
         return password != null && password.trim().length() > 4;
     }
 
-    private static class AccessProcessTask extends AsyncTask<String, Void, Result<LoggedInUser>> {
+    private static class AccessProcessTask extends AsyncTask<String, Void, Result<SessionInfo>> {
         private final WeakReference<LoginViewModel> loginModel;
 
         private AccessProcessTask(LoginViewModel loginModel) {
@@ -104,14 +104,14 @@ public class LoginViewModel extends ViewModel {
         }
 
         @Override
-        protected Result<LoggedInUser> doInBackground(String... params) {
+        protected Result<SessionInfo> doInBackground(String... params) {
             String username = params[0];
             String password = params[1];
             return loginModel.get().loginModel(username, password);
         }
 
         @Override
-        protected void onPostExecute(Result<LoggedInUser> result) {
+        protected void onPostExecute(Result<SessionInfo> result) {
             LoginViewModel source = loginModel.get();
             if (source != null) {
                 source.setResult(result);

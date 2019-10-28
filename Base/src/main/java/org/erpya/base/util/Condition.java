@@ -66,7 +66,7 @@ public class Condition implements Parcelable {
      * Default constructor
      */
     public Condition() {
-        this(null, null, null);
+        this(null, null, (Object[])null);
     }
 
     /** Key Attribute   */

@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.google.protobuf'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+    defaultConfig {
+        targetSdkVersion 28
+        minSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled false
+    }
+    buildTypes {
+        debug { minifyEnabled false }
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        disable 'GoogleAppIndexingWarning', 'HardcodedText', 'InvalidPackage'
+        textReport true
+        textOutput "stdout"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+protobuf {
+    protoc { artifact = 'com.google.protobuf:protoc:3.9.0' }
+    plugins {
+        javalite { artifact = "com.google.protobuf:protoc-gen-javalite:3.0.0" }
+        grpc { artifact = 'io.grpc:protoc-gen-grpc-java:1.24.0' // CURRENT_GRPC_VERSION
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.plugins {
+                javalite {}
+                grpc { // Options added to --grpc_out
+                    option 'lite' }
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':Base')
+    // You need to build grpc-java to obtain these libraries below.
+    implementation 'io.grpc:grpc-okhttp:1.24.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-protobuf-lite:1.24.0' // CURRENT_GRPC_VERSION
+    implementation 'io.grpc:grpc-stub:1.24.0' // CURRENT_GRPC_VERSION
+    implementation 'javax.annotation:javax.annotation-api:1.2'
+}
+
+task deleteJar(type: Delete) {
+    delete 'libs/spin-suite-server-dictionary.jar'
+}
+
+task createJar(type: Copy) {
+    from 'build/intermediates/intermediate-jars/release/'
+    into 'libs/'
+    include 'classes.jar'
+    rename('classes.jar', 'spin-suite-server-dictionary.jar')
+}
+
+createJar.dependsOn(deleteJar, build)

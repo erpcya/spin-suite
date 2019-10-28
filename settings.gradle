@@ -1,1 +1,1 @@
-include ':Sales', ':Base', ':Device-Management', ':Printing', ':Database', ':Component', ':Arduino', ':Arduino-RemoteSetup', ':Security', ':Server-Access'
+include ':Sales', ':Base', ':Device-Management', ':Printing', ':Database', ':Component', ':Arduino', ':Arduino-RemoteSetup', ':Security', ':Server-Access', ':Server-Dictionary', ':Server-BusinessData'

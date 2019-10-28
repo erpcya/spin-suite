@@ -8,9 +8,31 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".wizard.Wizard"
+            android:name=".window.Window"
+            android:label="@string/title_activity_window"
+            android:parentActivityName=".menu.MainMenu"
             android:theme="@style/AppTheme.NoActionBar">
-            android:label="@string/title_activity_wizard"></activity>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.erpya.component.menu.MainMenu" />
+        </activity>
+        <activity
+            android:name=".lookup.ItemDetail"
+            android:label="@string/title_activity_item_detail"
+            android:parentActivityName=".menu.MainMenu"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="org.erpya.component.menu.MainMenu" />
+        </activity>
+        <activity
+            android:name=".menu.MainMenu"
+            android:label="@string/title_activity_main_menu" />
+        <activity
+            android:name=".window.WindowManager"
+            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/title_activity_wizard">
+        </activity>
     </application>
 
 </manifest>

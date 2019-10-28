@@ -104,7 +104,7 @@ public class FieldDateTime extends FieldText implements View.OnClickListener, Da
             dateFormat = Env.getTimeFormat();
             is24HourView = DateFormat.is24HourFormat(getContext());
         } else {
-            dateFormat = Env.getDateFormat(getContext());
+            dateFormat = Env.getDateFormat();
         }
     }
 

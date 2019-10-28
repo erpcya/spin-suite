@@ -19,7 +19,7 @@ import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
-import org.erpya.security.data.LoginDataSource;
+import org.erpya.security.data.SecurityDataSource;
 import org.erpya.security.data.LoginRepository;
 
 /**
@@ -33,7 +33,7 @@ public class LoginViewModelFactory implements ViewModelProvider.Factory {
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
-            return (T) new LoginViewModel(LoginRepository.getInstance(new LoginDataSource()));
+            return (T) new LoginViewModel(LoginRepository.getInstance(new SecurityDataSource()));
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

@@ -31,7 +31,7 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
 
     public CustomPagerAdapter(FragmentManager fm) {
         super(fm);
-        fragmentList = new ArrayList<IWizardStep>();
+        fragmentList = new ArrayList<ITab>();
     }
 
     @Override
@@ -69,12 +69,12 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
      * Add Step to list
      * @param step
      */
-    public void addStep(IWizardStep step) {
+    public void addStep(ITab step) {
         fragmentList.add(step);
     }
 
     /** Fragment list   */
-    private List<IWizardStep> fragmentList;
+    private List<ITab> fragmentList;
     /** Parameters  */
     private Bundle savedInstanceState;
 
@@ -91,7 +91,7 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
      * @param position
      * @return
      */
-    public IWizardStep getStepDefinition(int position) {
+    public ITab getStepDefinition(int position) {
         if(!isValidPosition(position)) {
             return null;
         }

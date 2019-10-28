@@ -140,7 +140,7 @@ public class RSACrypt implements SecureInterface {
 			return;
 		//	Generate
 		try {
-			keySaved = Env.getContext(context, KEY_FOR_KEY);
+			keySaved = Env.getContext(KEY_FOR_KEY);
 			byte[] keyBytes = null;
 			if(keySaved == null) {
 				KeyPairGenerator kpg = KeyPairGenerator.getInstance(RSA);
@@ -150,7 +150,7 @@ public class RSACrypt implements SecureInterface {
 				keyBytes = publicKey.getEncoded();
 				String keyForSave = Base64.encodeToString(keyBytes, Base64.DEFAULT);
 				//	Set Key
-				Env.setContext(context, KEY_FOR_KEY, keyForSave);
+				Env.setContext(KEY_FOR_KEY, keyForSave);
 			} else {
 				keyBytes = Base64.decode(keySaved, Base64.DEFAULT);
 			}

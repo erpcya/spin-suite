@@ -41,8 +41,8 @@ public class AccessService {
     }
 
     private AccessService() {
-        host = AccessProviderValues.ACCESS_HOST;
-        port = AccessProviderValues.ACCESS_PORT;
+        host = AccessProviderDefaultValues.HOST;
+        port = AccessProviderDefaultValues.PORT;
         language = "en_US";
         clientVersion = BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME;
     }

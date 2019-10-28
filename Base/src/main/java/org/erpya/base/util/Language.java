@@ -378,7 +378,7 @@ public class Language {
 	 */
 	public static Language getLoginLanguage () {
 		// return s_loginLanguage; // See bug [2946164]
-		String stringLanguage = org.erpya.base.util.Env.getLanguage(org.erpya.base.util.Env.getContext());
+		String stringLanguage = Env.getLanguage();
 		Language language = Language.getLanguage(stringLanguage);
 		return language;
 	}   //  getLanguage

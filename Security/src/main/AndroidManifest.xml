@@ -7,6 +7,10 @@
             android:name=".ui.login.Login"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.register.Register"
+            android:label="@string/title_activity_register"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>
