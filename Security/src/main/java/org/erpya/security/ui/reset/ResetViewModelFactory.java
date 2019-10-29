@@ -13,27 +13,28 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.ui.register;
+package org.erpya.security.ui.reset;
 
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.support.annotation.NonNull;
 
 import org.erpya.security.data.RegisterRepository;
+import org.erpya.security.data.ResetPasswordRepository;
 import org.erpya.security.data.SecurityDataSource;
 
 /**
  * ViewModel provider factory to instantiate ResetViewModel.
  * Required given ResetViewModel has a non-empty constructor
  */
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+public class ResetViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
     @Override
     @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(RegisterRepository.getInstance(new SecurityDataSource()));
+        if (modelClass.isAssignableFrom(ResetViewModel.class)) {
+            return (T) new ResetViewModel(ResetPasswordRepository.getInstance(new SecurityDataSource()));
         } else {
             throw new IllegalArgumentException("Unknown ViewModel class");
         }

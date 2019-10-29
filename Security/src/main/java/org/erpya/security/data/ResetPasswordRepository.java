@@ -13,29 +13,43 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.ui.register;
+package org.erpya.security.data;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-
-import org.erpya.security.data.RegisterRepository;
-import org.erpya.security.data.SecurityDataSource;
+import org.erpya.security.data.model.RegisteredUser;
 
 /**
- * ViewModel provider factory to instantiate ResetViewModel.
- * Required given ResetViewModel has a non-empty constructor
+ * Class that requests authentication and user information from the remote data source and
+ * maintains an in-memory cache of login status and user credentials information.
  */
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+public class ResetPasswordRepository {
 
-    @NonNull
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(RegisterRepository.getInstance(new SecurityDataSource()));
-        } else {
-            throw new IllegalArgumentException("Unknown ViewModel class");
+    private static volatile ResetPasswordRepository instance;
+
+    private SecurityDataSource dataSource;
+    private RegisteredUser user = null;
+
+    // private constructor : singleton access
+    private ResetPasswordRepository(SecurityDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public static ResetPasswordRepository getInstance(SecurityDataSource dataSource) {
+        if (instance == null) {
+            instance = new ResetPasswordRepository(dataSource);
         }
+        return instance;
+    }
+
+    private void setRegisteredUser(RegisteredUser user) {
+        this.user = user;
+    }
+
+    public Result<RegisteredUser> resetPassword(String userName, String password, String token) {
+        // handle login
+        Result<RegisteredUser> result = dataSource.resetPassword(userName, password, token);
+        if (result instanceof Result.Success) {
+            setRegisteredUser(((Result.Success<RegisteredUser>) result).getData());
+        }
+        return result;
     }
 }

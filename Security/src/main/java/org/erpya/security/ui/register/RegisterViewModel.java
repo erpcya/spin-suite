@@ -64,7 +64,7 @@ public class RegisterViewModel extends ViewModel {
     private void setResult(Result<RegisteredUser> result) {
         if (result instanceof Result.Success) {
             RegisteredUser data = ((Result.Success<RegisteredUser>) result).getData();
-            loginResult.setValue(new RegisterResult(new RegisteredUserView(data.getDisplayName())));
+            loginResult.setValue(new RegisterResult(new RegisteredUserView(data.getUserName(), data.getDisplayName(), data.getToken())));
         } else {
             loginResult.setValue(new RegisterResult(R.string.register_failed, result.toString()));
         }

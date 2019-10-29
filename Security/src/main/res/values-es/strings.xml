@@ -2,12 +2,15 @@
     <string name="app_name">Seguridad</string>
     <string name="title_activity_login">Iniciar Sesión</string>
     <string name="title_activity_register">Registrarse</string>
+    <string name="title_activity_reset">Reiniciar Contraseña</string>
     <string name="prompt_email_username">Correo / Nombre de Usuario</string>
     <string name="prompt_username">Nombre de Usuario</string>
     <string name="prompt_name">Nombre</string>
     <string name="prompt_email">Correo Electrónico</string>
     <string name="prompt_password">Contraseña</string>
+    <string name="prompt_re_password">Repita Contraseña</string>
     <string name="action_sign_in">Iniciar Sesión</string>
+    <string name="action_reset_password">Reiniciar Contraseña</string>
     <string name="action_sign_up">Registrarse</string>
     <string name="action_sign_in_short">Iniciar Sesión</string>
     <string name="welcome">"Bienvenido !"</string>
@@ -15,6 +18,7 @@
     <string name="invalid_name">Nombre no válido</string>
     <string name="invalid_email">Correo Electrónico no válido</string>
     <string name="invalid_password">La contraseña debe tener mas de 4 caracteres</string>
+    <string name="invalid_password_mismatch">Las Contraseñas no coinciden</string>
     <string name="login_failed">"Inicio Fallido"</string>
     <string name="register_failed">"Registro Fallido"</string>
 </resources>

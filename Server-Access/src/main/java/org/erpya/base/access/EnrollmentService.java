@@ -86,8 +86,9 @@ public class EnrollmentService {
      * Close Service Provider
      */
     public void closeServiceProvider() throws InterruptedException {
-        if(connectionChannel == null) {
+        if(connectionChannel != null) {
             connectionChannel.shutdown().awaitTermination(1, TimeUnit.SECONDS);
+            connectionChannel = null;
         }
     }
 
@@ -97,7 +98,7 @@ public class EnrollmentService {
      * @param email
      * @return
      */
-    public ResetPasswordResponse resetPassword(String userName, String email) {
+    public ResetPasswordResponse requestResetPassword(String userName, String email) {
         ResetPasswordRequest request = ResetPasswordRequest.newBuilder()
                 .setUserName(userName)
                 .setEMail(email)

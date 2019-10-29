@@ -11,6 +11,10 @@
             android:name=".ui.register.Register"
             android:label="@string/title_activity_register"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".ui.reset.ResetPassword"
+            android:label="@string/title_activity_reset"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

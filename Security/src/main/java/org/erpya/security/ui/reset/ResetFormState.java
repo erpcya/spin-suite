@@ -13,29 +13,43 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.ui.register;
+package org.erpya.security.ui.reset;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-
-import org.erpya.security.data.RegisterRepository;
-import org.erpya.security.data.SecurityDataSource;
+import android.support.annotation.Nullable;
 
 /**
- * ViewModel provider factory to instantiate ResetViewModel.
- * Required given ResetViewModel has a non-empty constructor
+ * Data validation state of the reset password form.
  */
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+class ResetFormState {
+    @Nullable
+    private Integer rePasswordError;
+    @Nullable
+    private Integer passwordError;
+    private boolean isDataValid;
 
-    @NonNull
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(RegisterRepository.getInstance(new SecurityDataSource()));
-        } else {
-            throw new IllegalArgumentException("Unknown ViewModel class");
-        }
+    ResetFormState(@Nullable Integer passwordError, @Nullable Integer rePasswordError) {
+        this.rePasswordError = rePasswordError;
+        this.passwordError = passwordError;
+        this.isDataValid = false;
+    }
+
+    ResetFormState(boolean isDataValid) {
+        this.rePasswordError = null;
+        this.passwordError = null;
+        this.isDataValid = isDataValid;
+    }
+
+    @Nullable
+    Integer getRePasswordError() {
+        return rePasswordError;
+    }
+
+    @Nullable
+    Integer getPasswordError() {
+        return passwordError;
+    }
+
+    boolean isDataValid() {
+        return isDataValid;
     }
 }

@@ -13,29 +13,42 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.ui.register;
+package org.erpya.security.ui.reset;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-
-import org.erpya.security.data.RegisterRepository;
-import org.erpya.security.data.SecurityDataSource;
+import android.support.annotation.Nullable;
 
 /**
- * ViewModel provider factory to instantiate ResetViewModel.
- * Required given ResetViewModel has a non-empty constructor
+ * Authentication result : success (user details) or error message.
  */
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+class ResetResult {
+    @Nullable
+    private ResetUserView success;
+    @Nullable
+    private Integer error;
+    @Nullable
+    private String errorMessage;
 
-    @NonNull
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(RegisterRepository.getInstance(new SecurityDataSource()));
-        } else {
-            throw new IllegalArgumentException("Unknown ViewModel class");
-        }
+    ResetResult(@Nullable Integer error, String errorMessage) {
+        this.error = error;
+        this.errorMessage = errorMessage;
+    }
+
+    ResetResult(@Nullable ResetUserView success) {
+        this.success = success;
+    }
+
+    @Nullable
+    ResetUserView getSuccess() {
+        return success;
+    }
+
+    @Nullable
+    Integer getError() {
+        return error;
+    }
+
+    @Nullable
+    String getErrorMessage() {
+        return errorMessage;
     }
 }

@@ -19,14 +19,25 @@ package org.erpya.security.ui.register;
  * Class exposing authenticated user details to the UI.
  */
 class RegisteredUserView {
+    private String userName;
     private String displayName;
-    //... other data fields that may be accessible to the UI
+    private String token;
 
-    RegisteredUserView(String displayName) {
+    RegisteredUserView(String userName, String displayName, String token) {
         this.displayName = displayName;
+        this.token = token;
+        this.userName = userName;
     }
 
     String getDisplayName() {
         return displayName;
+    }
+
+    String getUserName() {
+        return userName;
+    }
+
+    String getToken() {
+        return token;
     }
 }

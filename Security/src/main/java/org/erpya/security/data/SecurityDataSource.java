@@ -20,10 +20,9 @@ import org.erpya.security.data.model.RegisteredUser;
 import org.erpya.security.data.model.RoleInfo;
 import org.erpya.security.data.model.SessionInfo;
 import org.erpya.security.data.model.UserInfo;
+import org.spin.grpc.util.ResetPasswordResponse;
 import org.spin.grpc.util.Session;
 import org.spin.grpc.util.User;
-
-import java.io.IOException;
 
 
 /**
@@ -58,7 +57,7 @@ public class SecurityDataSource {
             }
             throw new Exception("User / Password");
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error logging in", e));
+            return new Result.Error(e);
         }
     }
 
@@ -75,29 +74,57 @@ public class SecurityDataSource {
             if(user != null) {
                 RegisteredUser fakeUser =
                         new RegisteredUser(user.getName(), user.getLastName(), user.getUserName(), user.getEMail(), user.getToken());
-                AccessService.getInstance().closeServiceProvider();
+                EnrollmentService.getInstance().closeServiceProvider();
                 return new Result.Success<>(fakeUser);
             }
             throw new Exception("User / EMail");
         } catch (Exception e) {
-            return new Result.Error(new IOException("Error enrollment", e));
+            return new Result.Error(e);
         }
     }
 
     /**
-     * Reset password
+     * Request reset password
      * @param userName
      * @param email
      */
-    public void resetPasswod(String userName, String email) {
+    public void requestResetPassword(String userName, String email) {
         //  TODO: Implement it
+    }
+
+    /**
+     * Reset password
+     * @param password
+     * @param token
+     */
+    public Result<RegisteredUser> resetPassword(String userName, String password, String token) {
+        try {
+            ResetPasswordResponse response = EnrollmentService.getInstance().resetPasswordFromToken(token, password);
+            if(response != null) {
+                Result<SessionInfo> result = login(userName, password);
+                if(!(result instanceof Result.Success)) {
+                    throw new Exception(result.toString());
+                }
+                RegisteredUser fakeUser =
+                        new RegisteredUser(SessionInfo.getInstance().getUserInfo().getDisplayName(),
+                                null, SessionInfo.getInstance().getUserInfo().getUserName(),
+                                SessionInfo.getInstance().getUserInfo().getEMail(),
+                                SessionInfo.getInstance().getSessionUuid());
+                EnrollmentService.getInstance().closeServiceProvider();
+                return new Result.Success<>(fakeUser);
+            }
+            throw new Exception("User / EMail");
+        } catch (Exception e) {
+            return new Result.Error(e);
+        }
     }
 
     /**
      * Logout session
      * @param token
      */
-    public void logout(String token) {
+    public Result<RegisteredUser> logout(String token) {
         //  TODO: Implement it
+        return null;
     }
 }

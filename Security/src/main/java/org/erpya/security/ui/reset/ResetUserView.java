@@ -13,29 +13,20 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.ui.register;
-
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
-
-import org.erpya.security.data.RegisterRepository;
-import org.erpya.security.data.SecurityDataSource;
+package org.erpya.security.ui.reset;
 
 /**
- * ViewModel provider factory to instantiate ResetViewModel.
- * Required given ResetViewModel has a non-empty constructor
+ * Class exposing authenticated user details to the UI.
  */
-public class RegisterViewModelFactory implements ViewModelProvider.Factory {
+class ResetUserView {
+    private String displayName;
+    //... other data fields that may be accessible to the UI
 
-    @NonNull
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(RegisterViewModel.class)) {
-            return (T) new RegisterViewModel(RegisterRepository.getInstance(new SecurityDataSource()));
-        } else {
-            throw new IllegalArgumentException("Unknown ViewModel class");
-        }
+    ResetUserView(String displayName) {
+        this.displayName = displayName;
+    }
+
+    String getDisplayName() {
+        return displayName;
     }
 }

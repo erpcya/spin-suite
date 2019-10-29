@@ -26,9 +26,6 @@ public class RegisterRepository {
     private static volatile RegisterRepository instance;
 
     private SecurityDataSource dataSource;
-
-    // If user credentials will be cached in local storage, it is recommended it be encrypted
-    // @see https://developer.android.com/training/articles/keystore
     private RegisteredUser user = null;
 
     // private constructor : singleton access
@@ -41,18 +38,6 @@ public class RegisterRepository {
             instance = new RegisterRepository(dataSource);
         }
         return instance;
-    }
-
-    public boolean isLoggedIn() {
-        return user != null;
-    }
-
-    public void logout() {
-        if(user == null) {
-            return;
-        }
-        dataSource.logout(user.getToken());
-        user = null;
     }
 
     private void setRegisteredUser(RegisteredUser user) {
