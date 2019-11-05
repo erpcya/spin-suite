@@ -78,7 +78,7 @@ message CreateEntityRequest {
 
 //  Empty message
 message Empty {
-	
+
 }
 
 //  Empty message
@@ -257,14 +257,21 @@ message Condition {
 // Callout Request
 message RunCalloutRequest {
 	ClientRequest clientRequest = 1;
-	string callout = 2;
-	Entity Entity = 3;
+	string tableName = 2;
+	string windowUuid = 3;
+	string tabUuid = 4;
+	string callout = 5;
+	string columnName = 6;
+	Value oldValue = 7;
+	Value value = 8;
+	int32 windowNo = 9;
+	repeated KeyValue attributes = 10;
 }
 
 // Callout response with data from server
 message Callout {
 	string result = 1;
-	Entity values = 2;
+	map<string, Value> values = 2;
 }
 
 // BusinessProcess Request
