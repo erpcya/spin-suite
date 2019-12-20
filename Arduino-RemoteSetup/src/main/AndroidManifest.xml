@@ -1,5 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.erpya.app.arduino.remotesetup">
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
@@ -10,14 +12,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name="org.erpya.app.arduino.initialsetup.BusinessPartnerWizard"></activity>
+        <activity android:name=".BusinessPartnerAddressWizard" />
+        <activity android:name=".BusinessPartnerLocation" />
+        <activity android:name=".BusinessPartnerWizard" />
         <activity
             android:name=".DeviceListActivity"
             android:label="@string/title_device_list"
-            android:parentActivityName="org.erpya.app.arduino.remotesetup.DeviceListActivity"
+            android:parentActivityName=".DeviceListActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="org.erpya.app.arduino.remotesetup.DeviceListActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,14 +34,13 @@
         <activity
             android:name=".DeviceDetailActivity"
             android:label="@string/title_device_list"
-            android:parentActivityName="org.erpya.app.arduino.remotesetup.DeviceDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:parentActivityName=".DeviceDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="org.erpya.app.arduino.initialsetup.AddDeviceWindowManager"
-            android:windowSoftInputMode="adjustResize"
             android:label="@string/title_device_list"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
     </application>
+
 </manifest>

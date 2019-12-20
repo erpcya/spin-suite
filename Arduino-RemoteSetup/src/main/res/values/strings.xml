@@ -6,4 +6,22 @@
     <string name="DeviceDefinitionHelp">Define a name and description for device, it can be used for identify your device on future reference</string>
     <string name="WIFIInfoTitle">WIFI Info</string>
     <string name="WIFIInfoHelp">Put here your WIFI information for connect with device and send statics of use and remote control for you</string>
+    <string name="code">Code</string>
+    <string name="name2">Name2</string>
+    <string name="group_business_partner">Group Business Partner</string>
+    <string name="address">Address</string>
+    <string name="address1">Address1</string>
+    <string name="address2">Address2</string>
+    <string name="address3">Address3</string>
+    <string name="BusinessPartnerWizard" />
+    <string name="Code" />
+    <string name="Name2" />
+    <string name="BusinessPartnerLocation" />
+    <string name="Address" />
+    <string name="BusinessPArtnerAddress" />
+    <string name="Region" />
+    <string name="Country" />
+    <string name="City" />
+    <string name="State" />
+    <string name="C_BP_Group_ID" />
 </resources>

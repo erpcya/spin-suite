@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FCFAFB"
+    android:backgroundTint="#00F8F2F2">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/Address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="71dp"
+            android:layout_marginEnd="182dp"
+            android:layout_marginBottom="487dp"
+            android:autofillHints=""
+            android:backgroundTint="#FF1744"
+            android:ems="10"
+            android:hint="@string/address"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/Address1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="191dp"
+            android:layout_marginBottom="487dp"
+            android:autofillHints=""
+            android:backgroundTint="#FF1744"
+            android:ems="10"
+            android:hint="@string/address1"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Address"
+            app:layout_constraintVertical_bias="0.0"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/Address2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="191dp"
+            android:layout_marginBottom="400dp"
+            android:autofillHints=""
+            android:backgroundTint="#FF1744"
+            android:ems="10"
+            android:hint="@string/address2"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Address1"
+            app:layout_constraintVertical_bias="0.224"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/Address3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="22dp"
+            android:layout_marginEnd="191dp"
+            android:layout_marginBottom="120dp"
+            android:autofillHints=""
+            android:backgroundTint="#FF1744"
+            android:ems="10"
+            android:hint="@string/address3"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.541"
+            tools:targetApi="o" />
+
+        <EditText
+            android:id="@+id/Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="191dp"
+            android:layout_marginBottom="277dp"
+            android:autofillHints=""
+            android:backgroundTint="#FF1744"
+            android:ems="10"
+            android:hint="@string/Name"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/Address3"
+            app:layout_constraintVertical_bias="0.0"
+            tools:targetApi="o" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="239dp"
+            android:layout_marginTop="554dp"
+            android:layout_marginEnd="102dp"
+            android:layout_marginBottom="138dp"
+            android:backgroundTint="#FF1744"
+            android:text="@string/Action_Next"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </android.support.constraint.ConstraintLayout>
+</android.support.design.widget.CoordinatorLayout>
