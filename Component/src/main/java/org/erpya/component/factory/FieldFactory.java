@@ -191,7 +191,7 @@ public class FieldFactory {
      * @param isEncrypted
      * @return
      */
-    public FieldFactory withEncrypted(boolean isEncrypted) {
+    public FieldFactory withEncrypted(String isEncrypted) {
         fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsEncrypted, isEncrypted);
         return this;
     }

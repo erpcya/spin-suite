@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">BusinessPartner</string>
+    <string name="BusinessPartner" translatable="false" />
+    <string name="Code" translatable="false" />
+    <string name="Name">Name</string>
+    <string name="Name2" translatable="false" />
+    <string name="group_business_partner" translatable="false" />
+    <string name="State" translatable="false">State</string>
+    <string name="City" translatable="false">City</string>
+    <string name="Country" translatable="false">Country</string>
+    <string name="Region" translatable="false">Region</string>
+    <string name="address3" translatable="false">Address3</string>
+    <string name="address2" translatable="false">Address2</string>
+    <string name="address1" translatable="false">Address1</string>
+    <string name="address" translatable="false">Address</string>
+    <string name="BusinessPartnerLocation" translatable="false" />
+    <string name="BusinessPArtnerAddress" translatable="false" />
+    <string name="BusinessPartnerWizard" translatable="false" />
+    <string name="businesspatnergroup" translatable="false">BusinessPatnerGroup</string>
+    <string name="code" translatable="false">code</string>
+    <string name="name2" translatable="false">Name2</string>
+    <string name="BusinessPartnerAddress" translatable="false" />
+    <string name="groupbusinesspartner" translatable="false">GroupBusinessPartner</string>
+    <string name="Location" translatable="false">Location</string>
+    <string name="prueba" translatable="false">Prueba</string>
+
+
+    <string-array name="Region">
+        <item> </item>
+        <item>Country</item>
+        <item>City</item>
+        <item>State</item>
+    </string-array>
+
+    <string-array name="Location">
+        <item> </item>
+        <item>Address</item>
+        <item>Address1</item>
+        <item>Address2</item>
+        <item>Address3</item>
+        <item>Name</item>
+    </string-array>
+
+
+
+
+
+</resources>

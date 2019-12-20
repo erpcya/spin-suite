@@ -95,7 +95,6 @@ public class AddDeviceWindowManager extends Wizard {
                         .withUpdateable(true)
                         .withMandatory(true)
                         .withDisplayType(DisplayType.STRING)
-                        .withEncrypted(true)
                         .getFieldDefinition())
                 .withAdditionalField(FieldFactory.createField(getApplicationContext())
                         .withColumnName("DeviceNameReference")

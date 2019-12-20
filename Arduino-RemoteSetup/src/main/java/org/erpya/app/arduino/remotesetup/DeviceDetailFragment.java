@@ -100,7 +100,6 @@ public class DeviceDetailFragment extends Fragment {
                     .withReadOnly(false)
                     .withUpdateable(true)
                     .withMandatory(true)
-                    .withEncrypted(true)
                     .withDisplayType(DisplayType.STRING)
                     .getFieldComponent();
             parent.addView(devicePSK, layoutParams);
