@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BusinessPartnerAddress">
+
+    <TextView
+        android:id="@+id/Region"
+        android:layout_width="153dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="95dp"
+        android:text="@string/region"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:layout_width="187dp"
+        android:layout_height="36dp"
+        android:backgroundTint="#FF1744"
+        android:entries="@array/Region"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.191"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Region" />
+
+    <TextView
+        android:id="@+id/Location"
+        android:layout_width="163dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="47dp"
+        android:layout_marginTop="156dp"
+        android:text="@string/location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/Region" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="230dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="1dp"
+        android:backgroundTint="#FF1744"
+        android:entries="@array/Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.237"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Location" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="201dp"
+        android:layout_marginTop="89dp"
+        android:backgroundTint="#FF1744"
+        android:text="@string/finisfinished"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner2"
+        tools:text="finisfinished" />
+</android.support.constraint.ConstraintLayout>
