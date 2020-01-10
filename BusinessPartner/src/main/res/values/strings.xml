@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Business Partner</string>
+    <string name="code">Code</string>
+    <string name="name">Name</string>
+    <string name="name2">Name2</string>
+    <string name="group_business_partner">Group Business Partner</string>
+    <string name="next">Next</string>
+    <string name="address1">Address1</string>
+    <string name="address2">Address2</string>
+    <string name="address3">Address3</string>
+    <string name="address4">Address4</string>
+    <string name="location">Location</string>
+    <string name="region">Region</string>
+    <string name="finis">Finis</string>
+    <string name="finisfinished">finisfinished</string>
+
+    <string-array name="Region">
+        <item> </item>
+        <item>Country</item>
+        <item>State</item>
+        <item>City</item>
+    </string-array>
+
+    <string-array name="Location">
+        <item> </item>
+        <item>Address1</item>
+        <item>Address2</item>
+        <item>Address3</item>
+        <item>Address4</item>
+        <item>Name</item>
+    </string-array>
+
+</resources>
