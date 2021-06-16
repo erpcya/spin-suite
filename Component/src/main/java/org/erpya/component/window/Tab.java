@@ -23,8 +23,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.model.GenericPO;
-import org.erpya.base.model.InfoField;
 import org.erpya.base.model.PO;
 import org.erpya.base.model.POInfo;
 import org.erpya.base.util.Condition;
@@ -98,7 +98,7 @@ public class Tab extends Fragment implements IWizardStepPage {
         }
         //  Device Name
         if(fields != null) {
-            for(InfoField field: fields) {
+            for(FieldInfo field: fields) {
                 Field child = FieldFactory.createField(field).getFieldComponent();
                 //  Set value
                 if(stepModel != null) {
@@ -181,7 +181,7 @@ public class Tab extends Fragment implements IWizardStepPage {
      * Set field to show
      * @param fields
      */
-    public void setFields(List<InfoField> fields) {
+    public void setFields(List<FieldInfo> fields) {
         this.fields = fields;
     }
 
@@ -214,5 +214,5 @@ public class Tab extends Fragment implements IWizardStepPage {
     /** Help    */
     private String help;
     /** Fields  */
-    private List<InfoField> fields;
+    private List<FieldInfo> fields;
 }

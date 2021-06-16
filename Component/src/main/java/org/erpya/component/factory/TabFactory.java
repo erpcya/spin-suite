@@ -17,7 +17,7 @@ package org.erpya.component.factory;
 
 import android.content.Context;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.component.base.ITab;
 import org.erpya.component.window.GenericTab;
 
@@ -92,7 +92,7 @@ public class TabFactory {
      * @param field
      * @return
      */
-    public TabFactory withAdditionalField(InfoField field) {
+    public TabFactory withAdditionalField(FieldInfo field) {
         tab.addField(field);
         return this;
     }

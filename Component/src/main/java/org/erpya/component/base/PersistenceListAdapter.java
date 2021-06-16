@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
 import org.erpya.base.db.DBManager;
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.model.POInfo;
 import org.erpya.base.util.Condition;
 import org.erpya.base.util.Criteria;
@@ -38,7 +38,7 @@ public class PersistenceListAdapter extends ArrayAdapter {
      * Default constructor from field
      * @param fieldDefinition
      */
-    public PersistenceListAdapter(InfoField fieldDefinition) {
+    public PersistenceListAdapter(FieldInfo fieldDefinition) {
         this(fieldDefinition.getContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<KeyValue>());
         this.fieldDefinition = fieldDefinition;
     }
@@ -47,7 +47,7 @@ public class PersistenceListAdapter extends ArrayAdapter {
     private Context context;
     private int resource;
     private ListFilter filter = new ListFilter();
-    private InfoField fieldDefinition;
+    private FieldInfo fieldDefinition;
 
     @Override
     public int getCount() {
@@ -94,7 +94,7 @@ public class PersistenceListAdapter extends ArrayAdapter {
             List<KeyValue> values = new ArrayList<KeyValue>();
             try {
                 Criteria criteria = new Criteria();
-                criteria.addCriteria(POInfo.METADATA_TABLE_NAME, Condition.EQUAL, fieldDefinition.getTableName());
+                criteria.addCriteria(POInfo.METADATA_TABLE_NAME, Condition.EQUAL, fieldDefinition.get_TableName());
                 criteria.addCriteria(fieldDefinition.getDisplayColumnName(), Condition.LIKE, "%" + searchValue + "%");
                 //  Load Criteria
                 List<Map<String, Object>> resultAsList = DBManager.getInstance(getContext()).getListMap(criteria);

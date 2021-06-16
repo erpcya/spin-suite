@@ -17,17 +17,17 @@ package org.erpya.component.factory;
 
 import android.content.Context;
 
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.component.field.Field;
 import org.erpya.component.field.FieldAutoComplete;
 import org.erpya.component.field.FieldDateTime;
 import org.erpya.component.field.FieldNumber;
 import org.erpya.component.field.FieldText;
 import org.erpya.base.exceptions.SpinSuiteException;
-import org.erpya.base.model.InfoField;
 
 /**
  * @author Yamel Senih, ysenih@erpya.com , http://www.erpya.com
- * Factory for InfoField class, static class for generate InfoField
+ * Factory for FieldInfo class, static class for generate FieldInfo
  */
 public class FieldFactory {
 
@@ -36,14 +36,14 @@ public class FieldFactory {
      * @param context is mandatory
      */
     private FieldFactory(Context context) {
-        fieldDefinition = new InfoField(context);
+        fieldDefinition = new FieldInfo(context);
     }
 
     /**
      * Provate constructor from Info Field
      * @param fieldDefinition
      */
-    private FieldFactory(InfoField fieldDefinition) {
+    private FieldFactory(FieldInfo fieldDefinition) {
         this.fieldDefinition = fieldDefinition;
     }
 
@@ -61,18 +61,18 @@ public class FieldFactory {
      * @param fieldDefinition
      * @return
      */
-    public static FieldFactory createField(InfoField fieldDefinition) {
+    public static FieldFactory createField(FieldInfo fieldDefinition) {
         return new FieldFactory(fieldDefinition);
     }
 
     /** Internal Info Field */
-    private InfoField fieldDefinition;
+    private FieldInfo fieldDefinition;
 
     /**
      * Get Field Definition
      * @return
      */
-    public InfoField getFieldDefinition() {
+    public FieldInfo getFieldDefinition() {
         return fieldDefinition;
     }
 
@@ -82,7 +82,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withDisplayType(int displayType) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_DisplayType, displayType);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_DisplayType, displayType);
         return this;
     }
 
@@ -92,7 +92,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withTableName(String tableName) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_TableName, tableName);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_TableName, tableName);
         return this;
     }
 
@@ -102,7 +102,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withDisplayColumnName(String displayColumnName) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_DisplayColumnName, displayColumnName);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_DisplayColumnName, displayColumnName);
         return this;
     }
 
@@ -112,7 +112,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withColumnName(String columnName) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_ColumnName, columnName);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_ColumnName, columnName);
         return this;
     }
 
@@ -122,7 +122,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withName(String name) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_Name, name);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_Name, name);
         return this;
     }
 
@@ -132,7 +132,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withDescription(String description) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_Description, description);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_Description, description);
         return this;
     }
 
@@ -142,7 +142,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withHelp(String help) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_Help, help);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_Help, help);
         return this;
     }
 
@@ -152,7 +152,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withReadOnly(boolean isReadOnly) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsReadOnly, isReadOnly);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_IsReadOnly, isReadOnly);
         return this;
     }
 
@@ -162,7 +162,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withUpdateable(boolean isUpdateable) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsUpdateable, isUpdateable);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_IsUpdateable, isUpdateable);
         return this;
     }
 
@@ -172,7 +172,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withAlwaysUpdateable(boolean isAlwaysUpdateable) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsAlwaysUpdateable, isAlwaysUpdateable);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_IsAlwaysUpdateable, isAlwaysUpdateable);
         return this;
     }
 
@@ -182,7 +182,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withMandatory(boolean isMandatory) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsMandatory, isMandatory);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_IsMandatory, isMandatory);
         return this;
     }
 
@@ -192,7 +192,7 @@ public class FieldFactory {
      * @return
      */
     public FieldFactory withEncrypted(boolean isEncrypted) {
-        fieldDefinition.setAttribute(InfoField.ATTRIBUTE_IsEncrypted, isEncrypted);
+        fieldDefinition.setAttribute(FieldInfo.ATTRIBUTE_IsEncrypted, isEncrypted);
         return this;
     }
 

@@ -65,11 +65,12 @@ public class SalesMainActivity extends AppCompatActivity {
                 startLogin();
             }
         });
-        if(!SessionInfo.getInstance().isLogged()) {
-            startLogin();
-        } else {
-            startHome();
-        }
+        startLogin();
+//        if(!SessionInfo.getInstance().isLogged()) {
+//            startLogin();
+//        } else {
+//            startHome();
+//        }
     }
 
     private void startLogin() {

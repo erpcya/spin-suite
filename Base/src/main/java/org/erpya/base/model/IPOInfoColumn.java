@@ -58,7 +58,7 @@ public interface IPOInfoColumn {
      * Get Table Name
      * @return
      */
-    String getTableName();
+    String get_TableName();
 
     /**
      * Get Column Identifier if it exist

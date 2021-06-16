@@ -28,6 +28,7 @@ public class UserInfo {
     private String eMail;
     private String description;
     private String comments;
+    private String userUuid;
 
     /**
      * default constructor set context
@@ -37,12 +38,14 @@ public class UserInfo {
      * @param description
      * @param comments
      */
-    public UserInfo(String userName, String displayName, String eMail, String description, String comments) {
+    public UserInfo(String userUuid, String userName, String displayName, String eMail, String description, String comments) {
+        this.userUuid = userUuid;
         this.userName = userName;
         this.displayName = displayName;
         this.eMail = eMail;
         this.description = description;
         this.comments = comments;
+        Env.setContext("#User_UUID", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(userUuid));
         Env.setContext("#User_UserName", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(userName));
         Env.setContext("#User_DisplayName", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(displayName));
         Env.setContext("#User_UserEMail", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(eMail));
@@ -58,6 +61,7 @@ public class UserInfo {
     }
 
     private void loadFromContext() {
+        userUuid = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UUID"));
         userName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UserName"));
         displayName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_DisplayName"));
         eMail = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UserEMail"));
@@ -83,5 +87,9 @@ public class UserInfo {
 
     public String getComments() {
         return comments;
+    }
+
+    public String getUserUuid() {
+        return userUuid;
     }
 }

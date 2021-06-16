@@ -33,6 +33,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 
 dependencies {
@@ -47,6 +50,8 @@ dependencies {
     implementation project(path: ':Device-Management')
     implementation project(path: ':Component')
     implementation project(path: ':Security')
+    implementation project(path: ':Server-Access')
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation project(path: ':Server-POS')
 }

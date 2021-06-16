@@ -31,7 +31,7 @@ public class GenericPO extends PO {
     }
 
     @Override
-    protected String getTableName() {
+    public String get_TableName() {
         if(getInfo() != null) {
             return getInfo().getTableName();
         }

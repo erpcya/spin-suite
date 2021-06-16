@@ -18,7 +18,7 @@ package org.erpya.component.window;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.component.base.ITab;
 import org.erpya.component.base.IWizardStepPage;
 
@@ -34,7 +34,7 @@ public class GenericTab implements ITab {
 
     public GenericTab() {
         nextStep = -1;
-        fields = new ArrayList<InfoField>();
+        fields = new ArrayList<FieldInfo>();
     }
 
     /** Mandatory property  */
@@ -46,7 +46,7 @@ public class GenericTab implements ITab {
     /** Help to show for WindowManager Step    */
     private String help;
     /** Fields  */
-    private List<InfoField> fields;
+    private List<FieldInfo> fields;
     /** Step    */
     private IWizardStepPage tab;
     /** Table Name  */
@@ -138,7 +138,7 @@ public class GenericTab implements ITab {
      * Add field to Step
      * @param field
      */
-    public void addField(InfoField field) {
+    public void addField(FieldInfo field) {
         fields.add(field);
     }
 

@@ -17,12 +17,12 @@
 package org.erpya.base.model;
 
 /**
- * Interface for determine methods and constants of InfoField
+ * Interface for determine methods and constants of FieldInfo
  * @author yamel, ysenih@erpya.com , http://www.erpya.com
  * <li> FR [ 2 ]
  * @see https://github.com/adempiere/spin-suite/issues/2
  */
-public interface IInfoField {
+public interface IInfoField extends IPOInfoColumn {
 
     /** Supported Attributes    */
     String ATTRIBUTE_IsFieldOnly = "IsFieldOnly";

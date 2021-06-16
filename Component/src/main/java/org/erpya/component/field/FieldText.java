@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.util.DisplayType;
 import org.erpya.base.util.ValueUtil;
 
@@ -43,7 +43,7 @@ public class FieldText extends Field {
      * From field definition
      * @param fieldDefinition
      */
-    public FieldText(InfoField fieldDefinition) {
+    public FieldText(FieldInfo fieldDefinition) {
         super(fieldDefinition);
     }
 

@@ -24,13 +24,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.util.Util;
 import org.erpya.base.util.ValueUtil;
 import org.erpya.component.R;
-import org.erpya.base.model.InfoField;
 import org.erpya.base.util.LogM;
-
-import java.math.BigDecimal;
 
 /**
  * Main view for lookup in/out
@@ -57,7 +55,7 @@ public abstract class Field extends LinearLayout {
      * Constructor From field
      * @param fieldDefinition
      */
-    public Field(InfoField fieldDefinition) {
+    public Field(FieldInfo fieldDefinition) {
         super(fieldDefinition.getContext());
         setInfoField(fieldDefinition);
         initLayout(null, 0);
@@ -100,7 +98,7 @@ public abstract class Field extends LinearLayout {
     }
 
     /** Field Definition for it */
-    private InfoField fieldDefinition;
+    private FieldInfo fieldDefinition;
     /** Label for Component */
     private TextView label;
     /** Value   */
@@ -129,7 +127,7 @@ public abstract class Field extends LinearLayout {
      * Get Field Definition
      * @return
      */
-    public InfoField getFieldDefinition() {
+    public FieldInfo getFieldDefinition() {
         return fieldDefinition;
     }
 
@@ -273,7 +271,7 @@ public abstract class Field extends LinearLayout {
      * Set Info Field
      * @param fieldDefinition
      */
-    public void setInfoField(InfoField fieldDefinition) {
+    public void setInfoField(FieldInfo fieldDefinition) {
         this.fieldDefinition = fieldDefinition;
     }
 

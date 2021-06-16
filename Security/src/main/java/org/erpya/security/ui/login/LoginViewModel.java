@@ -93,7 +93,7 @@ public class LoginViewModel extends ViewModel {
 
     // A placeholder password validation check
     private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 4;
+        return password != null && password.trim().length() > 3;
     }
 
     private static class AccessProcessTask extends AsyncTask<String, Void, Result<SessionInfo>> {

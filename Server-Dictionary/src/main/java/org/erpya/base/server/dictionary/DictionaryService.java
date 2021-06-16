@@ -15,13 +15,20 @@
  ************************************************************************************/
 package org.erpya.base.server.dictionary;
 
+import org.erpya.base.dictionary.WindowInfo;
 import org.erpya.base.server.BuildConfig;
+import org.erpya.base.util.Env;
+import org.spin.grpc.util.ApplicationRequest;
 import org.spin.grpc.util.DictionaryServiceGrpc;
+import org.spin.grpc.util.EntityRequest;
+import org.spin.grpc.util.Tab;
+import org.spin.grpc.util.Window;
 
 import java.util.concurrent.TimeUnit;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.StatusRuntimeException;
 
 /**
  * AccessService class for business data
@@ -61,6 +68,60 @@ public class DictionaryService {
      */
     private DictionaryServiceGrpc.DictionaryServiceBlockingStub getServiceProvider() {
         return DictionaryServiceGrpc.newBlockingStub(getConnectionProvider());
+    }
+
+    /**
+     * GEt a Window information with defined window
+     * a520de12-fb40-11e8-a479-7a0060f0aa01
+     * @param uuid
+     * @param withTabs
+     * @return
+     */
+    public WindowInfo getWindow(String uuid, boolean withTabs) {
+        ApplicationRequest applicationRequest = ApplicationRequest.newBuilder()
+                .setLanguage(language)
+                .build();
+        EntityRequest request = EntityRequest.newBuilder()
+                .setUuid(uuid)
+                .setApplicationRequest(applicationRequest)
+                .build();
+        WindowInfo windowInfo = null;
+        try {
+            Window response;
+            if(withTabs) {
+                response = getServiceProvider().getWindowAndTabs(request);
+                for(Tab tab : response.getTabsList()) {
+
+                }
+            } else {
+                response = getServiceProvider().getWindow(request);
+            }
+            windowInfo = convertWindow(response);
+        } catch (StatusRuntimeException e) {
+            return null;
+        }
+        return windowInfo;
+    }
+
+    /**
+     * Convert Object from gRPC to base Window
+     * @param window
+     * @return
+     */
+    private WindowInfo convertWindow(Window window) {
+        WindowInfo windowInfo = new WindowInfo(Env.getContext());
+        if(window == null) {
+            return windowInfo;
+        }
+        windowInfo.reloadFromUuid(window.getUuid());
+        windowInfo.setValue("Id", window.getId());
+        windowInfo.setValue("Name", window.getName());
+        windowInfo.setValue("Description", window.getDescription());
+        windowInfo.setValue("Help", window.getHelp());
+        windowInfo.setValue("IsActive", window.getIsActive());
+        windowInfo.setValue("IsSOTrx", window.getIsSOTrx());
+        windowInfo.setValue("WindowType", window.getWindowType());
+        return windowInfo;
     }
 
 //    /**

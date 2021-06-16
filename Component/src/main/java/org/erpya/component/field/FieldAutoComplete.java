@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.util.DisplayType;
 import org.erpya.base.util.KeyValue;
 import org.erpya.base.util.Util;
@@ -49,7 +49,7 @@ public class FieldAutoComplete extends Field {
      *
      * @param fieldDefinition
      */
-    public FieldAutoComplete(InfoField fieldDefinition) {
+    public FieldAutoComplete(FieldInfo fieldDefinition) {
         super(fieldDefinition);
     }
 

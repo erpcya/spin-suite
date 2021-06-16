@@ -219,7 +219,7 @@ public class POInfoColumn implements org.erpya.base.model.IPOInfoColumn {
     private String displayColumnName;
 
     @Override
-    public String getTableName() {
+    public String get_TableName() {
         return tableName;
     }
 

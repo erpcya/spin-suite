@@ -16,7 +16,7 @@
 package org.erpya.base.access;
 
 import org.erpya.base.util.Util;
-import org.spin.grpc.util.AccessServiceGrpc;
+import org.spin.grpc.util.SecurityGrpc;
 import org.spin.grpc.util.LoginRequest;
 import org.spin.grpc.util.LogoutRequest;
 import org.spin.grpc.util.Session;
@@ -44,7 +44,7 @@ public class AccessService {
         host = AccessProviderDefaultValues.HOST;
         port = AccessProviderDefaultValues.PORT;
         language = "en_US";
-        clientVersion = BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME;
+        clientVersion = "";
     }
 
     /**
@@ -62,8 +62,8 @@ public class AccessService {
      * Get Service Provider
      * @return
      */
-    private AccessServiceGrpc.AccessServiceBlockingStub getServiceProvider() {
-        return AccessServiceGrpc.newBlockingStub(getConnectionProvider());
+    private SecurityGrpc.SecurityBlockingStub getServiceProvider() {
+        return SecurityGrpc.newBlockingStub(getConnectionProvider());
     }
 
     /**
@@ -79,7 +79,7 @@ public class AccessService {
                 .setLanguage(this.language)
                 .setClientVersion(clientVersion)
                 .build();
-        return getServiceProvider().runLoginDefault(request);
+        return getServiceProvider().runLogin(request);
     }
 
     /**
@@ -98,7 +98,7 @@ public class AccessService {
      * @return
      */
     public Session requestLogout(String sessionUuid) {
-        AccessServiceGrpc.AccessServiceBlockingStub accessService = AccessServiceGrpc.newBlockingStub(getConnectionProvider());
+        SecurityGrpc.SecurityBlockingStub accessService = SecurityGrpc.newBlockingStub(getConnectionProvider());
         LogoutRequest request = LogoutRequest.newBuilder()
                 .setSessionUuid(sessionUuid)
                 .setLanguage(this.language)

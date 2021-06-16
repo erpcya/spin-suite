@@ -15,12 +15,12 @@
  ************************************************************************************/
 package org.erpya.base.access;
 
-import org.spin.grpc.util.EnrollUserRequest;
-import org.spin.grpc.util.EnrollmentServiceGrpc;
-import org.spin.grpc.util.ResetPasswordRequest;
-import org.spin.grpc.util.ResetPasswordResponse;
-import org.spin.grpc.util.ResetPasswordTokenRequest;
-import org.spin.grpc.util.User;
+import org.spin.grpc.enrollment.EnrollUserRequest;
+import org.spin.grpc.enrollment.RegisterGrpc;
+import org.spin.grpc.enrollment.ResetPasswordRequest;
+import org.spin.grpc.enrollment.ResetPasswordResponse;
+import org.spin.grpc.enrollment.ResetPasswordTokenRequest;
+import org.spin.grpc.enrollment.User;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +44,7 @@ public class EnrollmentService {
     private EnrollmentService() {
         host = AccessProviderDefaultValues.ENROLLMENT_HOST;
         port = AccessProviderDefaultValues.ENROLLMENT_PORT;
-        clientVersion = BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME;
+        clientVersion = "";
     }
 
     /**
@@ -62,8 +62,8 @@ public class EnrollmentService {
      * Get Service Provider
      * @return
      */
-    private EnrollmentServiceGrpc.EnrollmentServiceBlockingStub getServiceProvider() {
-        return EnrollmentServiceGrpc.newBlockingStub(getConnectionProvider());
+    private RegisterGrpc.RegisterBlockingStub getServiceProvider() {
+        return RegisterGrpc.newBlockingStub(getConnectionProvider());
     }
 
     /**
@@ -77,7 +77,7 @@ public class EnrollmentService {
         EnrollUserRequest request = EnrollUserRequest.newBuilder()
                 .setName(name)
                 .setUserName(userName)
-                .setEMail(email)
+                .setEmail(email)
                 .build();
         return getServiceProvider().enrollUser(request);
     }
@@ -101,7 +101,7 @@ public class EnrollmentService {
     public ResetPasswordResponse requestResetPassword(String userName, String email) {
         ResetPasswordRequest request = ResetPasswordRequest.newBuilder()
                 .setUserName(userName)
-                .setEMail(email)
+                .setEmail(email)
                 .build();
         return getServiceProvider().resetPassword(request);
     }

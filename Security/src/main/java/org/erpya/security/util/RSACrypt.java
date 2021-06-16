@@ -236,7 +236,9 @@ public class RSACrypt implements SecureInterface {
 
 	@Override
 	public String encrypt(String value) {
-		return encodeText(value);
+//		return encodeText(value);
+//		TODO: Support for it
+		return value;
 	}
 
 	@Override

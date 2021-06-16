@@ -21,7 +21,7 @@ import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.Gravity;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.util.DisplayType;
 import org.erpya.base.util.Env;
 
@@ -54,7 +54,7 @@ public class FieldNumber extends FieldText {
      * From field definition
      * @param fieldDefinition
      */
-    public FieldNumber(InfoField fieldDefinition) {
+    public FieldNumber(FieldInfo fieldDefinition) {
         super(fieldDefinition);
     }
 

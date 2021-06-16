@@ -20,9 +20,9 @@ import org.erpya.security.data.model.RegisteredUser;
 import org.erpya.security.data.model.RoleInfo;
 import org.erpya.security.data.model.SessionInfo;
 import org.erpya.security.data.model.UserInfo;
-import org.spin.grpc.util.ResetPasswordResponse;
+import org.spin.grpc.enrollment.ResetPasswordResponse;
+import org.spin.grpc.enrollment.User;
 import org.spin.grpc.util.Session;
-import org.spin.grpc.util.User;
 
 
 /**
@@ -46,7 +46,7 @@ public class SecurityDataSource {
                         .setSessionId(session.getId());
                 org.spin.grpc.util.UserInfo user = session.getUserInfo();
                 if(user != null) {
-                    sessionInfo.setUserInfo(new UserInfo(username, session.getUserInfo().getName(), null, session.getUserInfo().getDescription(), session.getUserInfo().getComments()));
+                    sessionInfo.setUserInfo(new UserInfo(user.getUuid(), username, session.getUserInfo().getName(), null, session.getUserInfo().getDescription(), session.getUserInfo().getComments()));
                 }
                 org.spin.grpc.util.Role role = session.getRole();
                 if(role != null) {
@@ -73,7 +73,7 @@ public class SecurityDataSource {
             User user = EnrollmentService.getInstance().enrollUser(name, username, email);
             if(user != null) {
                 RegisteredUser fakeUser =
-                        new RegisteredUser(user.getName(), user.getLastName(), user.getUserName(), user.getEMail(), user.getToken());
+                        new RegisteredUser(user.getName(), null, user.getUserName(), user.getEmail(), null);
                 EnrollmentService.getInstance().closeServiceProvider();
                 return new Result.Success<>(fakeUser);
             }

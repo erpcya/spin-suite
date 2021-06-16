@@ -20,11 +20,13 @@ package org.erpya.base.access;
  */
 public interface AccessProviderDefaultValues {
     /** EnrollmentService default Host */
-    String ENROLLMENT_HOST = "mobile.spin-suite.com";
+//    String ENROLLMENT_HOST = "mobile.spin-suite.com";
+    String ENROLLMENT_HOST = "192.168.1.104";
     /** AccessService default Host */
-    String HOST = "mobile.spin-suite.com";
+//    String HOST = "mobile.spin-suite.com";
+    String HOST = "192.168.1.104";
     /*** EnrollmentService and Password reset password  */
-    int ENROLLMENT_PORT = 50047;
+    int ENROLLMENT_PORT = 50059;
     /** AccessService Default Port */
-    int PORT = 50050;
+    int PORT = 50059;
 }

@@ -82,6 +82,8 @@ public class POInfo implements org.erpya.base.model.IPOInfo {
     public static final String TABLE_NAME = "AD_Table";
     /** Attribute for table Search  */
     public static final String METADATA_TABLE_NAME = "AD_Table_TableName";
+    /** Attribute for search by UUID    */
+    public static final String METADATA_UUID = "UUID";
     /** Attribute for identifier or display value   */
     public static final String DISPLAY_VALUE_KEY = "DisplayValue_Key";
 

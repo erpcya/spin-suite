@@ -26,7 +26,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-import org.erpya.base.model.InfoField;
+import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.base.util.Env;
 import org.erpya.base.util.Util;
 import org.erpya.base.util.ValueUtil;
@@ -52,7 +52,7 @@ public class FieldDateTime extends FieldText implements View.OnClickListener, Da
      * From field definition
      * @param fieldDefinition
      */
-    public FieldDateTime(InfoField fieldDefinition) {
+    public FieldDateTime(FieldInfo fieldDefinition) {
         super(fieldDefinition);
     }
 

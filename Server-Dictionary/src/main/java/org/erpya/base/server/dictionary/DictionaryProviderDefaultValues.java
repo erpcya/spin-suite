@@ -20,7 +20,8 @@ package org.erpya.base.server.dictionary;
  */
 public interface DictionaryProviderDefaultValues {
     /** AccessService default Host */
-    String HOST = "mobile.spin-suite.com";
+//    String HOST = "mobile.spin-suite.com";
+    String HOST = "20.12.0.23";
     /** AccessService Default Port */
     int PORT = 50051;
 }

@@ -20,6 +20,7 @@ import android.util.Log;
 
 import org.erpya.base.db.DBManager;
 import org.erpya.base.exceptions.SpinSuiteException;
+import org.erpya.base.util.Condition;
 import org.erpya.base.util.Criteria;
 import org.erpya.base.util.LogM;
 import org.erpya.base.util.Util;
@@ -64,7 +65,7 @@ public abstract class PO {
      */
     public PO(Context context) {
         this.context = context;
-        this.info = new POInfo(context, getTableName());
+        this.info = new POInfo(context, get_TableName());
     }
 
     /** Map for key and values  */
@@ -84,7 +85,7 @@ public abstract class PO {
      * Get Table Name if it is not give from contructor
      * @return
      */
-    protected abstract String getTableName();
+    public abstract String get_TableName();
 
     /**
      * Get Map with key and values, used for save data
@@ -448,6 +449,17 @@ public abstract class PO {
         //  If all is ok change old values
         oldAttributes.clear();
         oldAttributes.putAll(attributes);
+    }
+
+    /**
+     * Reload from Meta-Data UUID
+     * @param uuid
+     * @return
+     */
+    public boolean reloadFromUuid(String uuid) {
+        Criteria criteriaForLoad = new Criteria();
+        criteriaForLoad.addCriteria(POInfo.METADATA_TABLE_NAME, Condition.EQUAL, get_TableName()).addCriteria(POInfo.METADATA_UUID, Condition.EQUAL, uuid);
+        return reload(criteriaForLoad);
     }
 
     /**
