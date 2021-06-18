@@ -16,10 +16,10 @@
 package org.erpya.security.data;
 import org.erpya.base.access.AccessService;
 import org.erpya.base.access.EnrollmentService;
-import org.erpya.security.data.model.RegisteredUser;
-import org.erpya.security.data.model.RoleInfo;
-import org.erpya.security.data.model.SessionInfo;
-import org.erpya.security.data.model.UserInfo;
+import org.erpya.model.RegisteredUser;
+import org.erpya.model.RoleInfo;
+import org.erpya.model.SessionInfo;
+import org.erpya.model.UserInfo;
 import org.spin.grpc.enrollment.ResetPasswordResponse;
 import org.spin.grpc.enrollment.User;
 import org.spin.grpc.util.Session;
@@ -38,7 +38,7 @@ public class SecurityDataSource {
      */
     public Result<SessionInfo> login(String username, String password) {
         try {
-            Session session = AccessService.getInstance().requestLoginDefault(username, password, null);
+            Session session = AccessService.getInstance().loginWithUser(username, password, null);
             if(session != null) {
                 SessionInfo sessionInfo = SessionInfo.getInstance()
                         .setSessionUuid(session.getUuid())

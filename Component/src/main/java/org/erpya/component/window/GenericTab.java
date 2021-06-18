@@ -16,7 +16,7 @@
 package org.erpya.component.window;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import org.erpya.base.dictionary.FieldInfo;
 import org.erpya.component.base.ITab;

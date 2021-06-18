@@ -19,7 +19,7 @@ import org.erpya.base.dictionary.WindowInfo;
 import org.erpya.base.server.BuildConfig;
 import org.erpya.base.util.Env;
 import org.spin.grpc.util.ApplicationRequest;
-import org.spin.grpc.util.DictionaryServiceGrpc;
+import org.spin.grpc.util.DictionaryGrpc;
 import org.spin.grpc.util.EntityRequest;
 import org.spin.grpc.util.Tab;
 import org.spin.grpc.util.Window;
@@ -48,7 +48,7 @@ public class DictionaryService {
         host = DictionaryProviderDefaultValues.HOST;
         port = DictionaryProviderDefaultValues.PORT;
         language = "en_US";
-        clientVersion = BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME;
+        clientVersion = "";
     }
 
     /**
@@ -66,8 +66,8 @@ public class DictionaryService {
      * Get Service Provider
      * @return
      */
-    private DictionaryServiceGrpc.DictionaryServiceBlockingStub getServiceProvider() {
-        return DictionaryServiceGrpc.newBlockingStub(getConnectionProvider());
+    private DictionaryGrpc.DictionaryBlockingStub getServiceProvider() {
+        return DictionaryGrpc.newBlockingStub(getConnectionProvider());
     }
 
     /**
@@ -89,7 +89,7 @@ public class DictionaryService {
         try {
             Window response;
             if(withTabs) {
-                response = getServiceProvider().getWindowAndTabs(request);
+                response = getServiceProvider().getWindow(request);
                 for(Tab tab : response.getTabsList()) {
 
                 }
@@ -119,7 +119,7 @@ public class DictionaryService {
         windowInfo.setValue("Description", window.getDescription());
         windowInfo.setValue("Help", window.getHelp());
         windowInfo.setValue("IsActive", window.getIsActive());
-        windowInfo.setValue("IsSOTrx", window.getIsSOTrx());
+        windowInfo.setValue("IsSOTrx", window.getIsSalesTransaction());
         windowInfo.setValue("WindowType", window.getWindowType());
         return windowInfo;
     }

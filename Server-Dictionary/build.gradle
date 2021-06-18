@@ -49,6 +49,7 @@ protobuf {
 
 dependencies {
     implementation project(path: ':Base')
+    implementation project(path: ':Server')
     // You need to build grpc-java to obtain these libraries below.
     implementation 'io.grpc:grpc-okhttp:1.24.0' // CURRENT_GRPC_VERSION
     implementation 'io.grpc:grpc-protobuf-lite:1.24.0' // CURRENT_GRPC_VERSION

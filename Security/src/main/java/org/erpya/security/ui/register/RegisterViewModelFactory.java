@@ -15,9 +15,9 @@
  ************************************************************************************/
 package org.erpya.security.ui.register;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.NonNull;
 
 import org.erpya.security.data.RegisterRepository;
 import org.erpya.security.data.SecurityDataSource;

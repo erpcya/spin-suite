@@ -43,6 +43,18 @@ public class PointOfSalesService {
         return instance;
     }
 
+    /**
+     * Set Backend parameters
+     * @param host
+     * @param port
+     * @return
+     */
+    public PointOfSalesService withConnectionValues(String host, int port) {
+        this.host = host;
+        this.port = port;
+        return this;
+    }
+
     private PointOfSalesService() {
         host = PointOfSalesProviderDefaultValues.HOST;
         port = PointOfSalesProviderDefaultValues.PORT;

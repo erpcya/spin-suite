@@ -19,7 +19,7 @@ package org.erpya.pos;
  * Default class with constants parameters for Access Service
  */
 public interface PointOfSalesProviderDefaultValues {
-    String HOST = "192.168.1.104";
+    String HOST = "mobile.spin-suite.com";
     /** PointOfSalesProviderDefaultValues Default Port */
     int PORT = 50059;
 }

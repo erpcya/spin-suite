@@ -16,7 +16,7 @@
 package org.erpya.component.base;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 /**
  * Contract for determine standard methods to be implemented for Fragments used on WindowManager

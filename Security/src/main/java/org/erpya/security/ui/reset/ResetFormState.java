@@ -15,7 +15,7 @@
  ************************************************************************************/
 package org.erpya.security.ui.reset;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Data validation state of the reset password form.

@@ -13,10 +13,9 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.data.model;
+package org.erpya.model;
 
 import org.erpya.base.util.Env;
-import org.erpya.security.util.SecureHandler;
 
 /**
  * User information like name, username and comments
@@ -45,12 +44,12 @@ public class UserInfo {
         this.eMail = eMail;
         this.description = description;
         this.comments = comments;
-        Env.setContext("#User_UUID", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(userUuid));
-        Env.setContext("#User_UserName", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(userName));
-        Env.setContext("#User_DisplayName", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(displayName));
-        Env.setContext("#User_UserEMail", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(eMail));
-        Env.setContext("#User_Description", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(description));
-        Env.setContext("#User_Comments", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(comments));
+        Env.setContext("#User_UUID", userUuid);
+        Env.setContext("#User_UserName", userName);
+        Env.setContext("#User_DisplayName", displayName);
+        Env.setContext("#User_UserEMail", eMail);
+        Env.setContext("#User_Description", description);
+        Env.setContext("#User_Comments", comments);
     }
 
     /**
@@ -61,12 +60,12 @@ public class UserInfo {
     }
 
     private void loadFromContext() {
-        userUuid = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UUID"));
-        userName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UserName"));
-        displayName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_DisplayName"));
-        eMail = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_UserEMail"));
-        description = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_Description"));
-        comments = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_Comments"));
+        userUuid = Env.getContext("#User_UUID");
+        userName = Env.getContext("#User_UserName");
+        displayName = Env.getContext("#User_DisplayName");
+        eMail = Env.getContext("#User_UserEMail");
+        description = Env.getContext("#User_Description");
+        comments = Env.getContext("#User_Comments");
     }
 
     public String getEMail() {

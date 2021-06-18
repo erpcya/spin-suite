@@ -40,6 +40,18 @@ public class AccessService {
         return instance;
     }
 
+    /**
+     * Set Backend parameters
+     * @param host
+     * @param port
+     * @return
+     */
+    public AccessService withConnectionValues(String host, int port) {
+        this.host = host;
+        this.port = port;
+        return this;
+    }
+
     private AccessService() {
         host = AccessProviderDefaultValues.HOST;
         port = AccessProviderDefaultValues.PORT;
@@ -69,13 +81,31 @@ public class AccessService {
     /**
      * Make login with Role, Organization and Warehouse as default values
      */
-    public Session requestLoginDefault(String userName, String userPass, String language) {
+    public Session loginWithUser(String userName, String userPass, String language) {
         if(!Util.isEmpty(language)) {
             this.language = language;
         }
         LoginRequest request = LoginRequest.newBuilder()
                 .setUserName(userName)
                 .setUserPass(userPass)
+                .setLanguage(this.language)
+                .setClientVersion(clientVersion)
+                .build();
+        return getServiceProvider().runLogin(request);
+    }
+
+    /**
+     * Make login based on token
+     * @param token
+     * @param language
+     * @return
+     */
+    public Session loginWithToken(String token, String language) {
+        if(!Util.isEmpty(language)) {
+            this.language = language;
+        }
+        LoginRequest request = LoginRequest.newBuilder()
+                .setToken(token)
                 .setLanguage(this.language)
                 .setClientVersion(clientVersion)
                 .build();

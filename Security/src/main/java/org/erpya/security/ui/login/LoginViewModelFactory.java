@@ -15,9 +15,9 @@
  ************************************************************************************/
 package org.erpya.security.ui.login;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.annotation.NonNull;
 
 import org.erpya.security.data.SecurityDataSource;
 import org.erpya.security.data.LoginRepository;

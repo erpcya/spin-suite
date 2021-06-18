@@ -1,4 +1,4 @@
-package org.erpya.security.data.model;
+package org.erpya.model;
 
 import org.erpya.base.util.Util;
 

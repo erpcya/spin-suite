@@ -21,7 +21,7 @@ package org.erpya.base.access;
 public interface AccessProviderDefaultValues {
     /** EnrollmentService default Host */
 //    String ENROLLMENT_HOST = "mobile.spin-suite.com";
-    String ENROLLMENT_HOST = "192.168.1.104";
+    String ENROLLMENT_HOST = "mobile.spin-suite.com";
     /** AccessService default Host */
 //    String HOST = "mobile.spin-suite.com";
     String HOST = "192.168.1.104";

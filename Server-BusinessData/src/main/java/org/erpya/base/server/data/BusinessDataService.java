@@ -15,7 +15,7 @@
  ************************************************************************************/
 package org.erpya.base.server.data;
 
-import org.spin.grpc.util.BusinessDataServiceGrpc;
+import org.spin.grpc.util.BusinessDataGrpc;
 
 import java.util.concurrent.TimeUnit;
 
@@ -40,7 +40,7 @@ public class BusinessDataService {
         host = BusinessDataProviderDefaultValues.HOST;
         port = BusinessDataProviderDefaultValues.PORT;
         language = "en_US";
-        clientVersion = BuildConfig.VERSION_CODE + " - " + BuildConfig.VERSION_NAME;
+        clientVersion = "";
     }
 
     /**
@@ -58,8 +58,8 @@ public class BusinessDataService {
      * Get Service Provider
      * @return
      */
-    private BusinessDataServiceGrpc.BusinessDataServiceBlockingStub getServiceProvider() {
-        return BusinessDataServiceGrpc.newBlockingStub(getConnectionProvider());
+    private BusinessDataGrpc.BusinessDataBlockingStub getServiceProvider() {
+        return BusinessDataGrpc.newBlockingStub(getConnectionProvider());
     }
 
 //    /**

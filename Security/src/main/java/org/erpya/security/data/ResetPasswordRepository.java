@@ -15,7 +15,7 @@
  ************************************************************************************/
 package org.erpya.security.data;
 
-import org.erpya.security.data.model.RegisteredUser;
+import org.erpya.model.RegisteredUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and

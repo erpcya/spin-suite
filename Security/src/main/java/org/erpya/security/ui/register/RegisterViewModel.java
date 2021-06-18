@@ -15,16 +15,16 @@
  ************************************************************************************/
 package org.erpya.security.ui.register;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import android.os.AsyncTask;
 import android.util.Patterns;
 
 import org.erpya.security.R;
 import org.erpya.security.data.RegisterRepository;
 import org.erpya.security.data.Result;
-import org.erpya.security.data.model.RegisteredUser;
+import org.erpya.model.RegisteredUser;
 
 import java.lang.ref.WeakReference;
 

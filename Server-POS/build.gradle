@@ -3,10 +3,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     defaultConfig {
-        targetSdkVersion 29
+        targetSdkVersion 28
         minSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -15,7 +15,7 @@ android {
     buildTypes {
         debug { minifyEnabled false }
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -51,6 +51,7 @@ protobuf {
 dependencies {
     implementation project(path: ':Base')
     implementation project(path: ':Server-Access')
+    implementation project(path: ':Server')
     // You need to build grpc-java to obtain these libraries below.
     implementation 'io.grpc:grpc-okhttp:1.24.0' // CURRENT_GRPC_VERSION
     implementation 'io.grpc:grpc-protobuf-lite:1.24.0' // CURRENT_GRPC_VERSION

@@ -13,10 +13,9 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.data.model;
+package org.erpya.model;
 
 import org.erpya.base.util.Env;
-import org.erpya.security.util.SecureHandler;
 
 import java.util.HashMap;
 import java.util.List;
@@ -64,10 +63,10 @@ public class RoleInfo {
         this.clientId = clientId;
         this.roleId = roleId;
         accessInfo = new HashMap<>();
-        Env.setContext("#Role_Name", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(name));
-        Env.setContext("#Role_UUID", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(uuid));
-        Env.setContext("#Role_ClientName", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(clientName));
-        Env.setContext("#Role_Description", SecureHandler.getInstance(Env.getContext()).getSecureEngine().encrypt(description));
+        Env.setContext("#Role_Name", name);
+        Env.setContext("#Role_UUID", uuid);
+        Env.setContext("#Role_ClientName", clientName);
+        Env.setContext("#Role_Description", description);
         Env.setContext("#Role_AD_Client_ID", clientId);
         Env.setContext("#Role_AD_Role_ID", roleId);
     }
@@ -80,10 +79,10 @@ public class RoleInfo {
     }
 
     private void loadFromContext() {
-        name = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#Role_Name"));
-        uuid = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#Role_UUID"));
-        clientName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#Role_ClientName"));
-        description = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#User_Description"));
+        name = Env.getContext("#Role_Name");
+        uuid = Env.getContext("#Role_UUID");
+        clientName = Env.getContext("#Role_ClientName");
+        description = Env.getContext("#User_Description");
         clientId = Env.getContextAsInt("#Role_AD_Client_ID");
         roleId = Env.getContextAsInt("#Role_AD_Role_ID");
         List<String> access = Env.getKeys(ACCESS_KEY);

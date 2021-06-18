@@ -1,0 +1,1022 @@
+/************************************************************************************
+ * Copyright (C) 2012-2018 E.R.P. Consultores y Asociados, C.A.                     *
+ * Contributor(s): Yamel Senih ysenih@erpya.com                                     *
+ * This program is free software: you can redistribute it and/or modify             *
+ * it under the terms of the GNU General Public License as published by             *
+ * the Free Software Foundation, either version 2 of the License, or                *
+ * (at your option) any later version.                                              *
+ * This program is distributed in the hope that it will be useful,                  *
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of                   *
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.	See the                     *
+ * GNU General Public License for more details.                                     *
+ * You should have received a copy of the GNU General Public License                *
+ * along with this program.	If not, see <https://www.gnu.org/licenses/>.            *
+ ************************************************************************************/
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.spin.grpc.util";
+option java_outer_classname = "ADempiereData";
+option objc_class_prefix = "HLW";
+
+import "base_data_type.proto";
+import "client.proto";
+
+package data;
+
+// The greeting service definition.
+service BusinessData {
+	// Get a Entity
+	rpc GetEntity(GetEntityRequest) returns (Entity) {}
+	// Create Entity Request
+	rpc CreateEntity(CreateEntityRequest) returns (Entity) {}
+	// Update Entity Request
+	rpc UpdateEntity(UpdateEntityRequest) returns (Entity) {}
+	// Delete Entity Request
+	rpc DeleteEntity(DeleteEntityRequest) returns (Empty) {}
+	//	List a Entities
+	rpc ListEntities(ListEntitiesRequest) returns (ListEntitiesResponse) {}
+	//	Request a BusinessProcess / Report
+	rpc RunBusinessProcess(RunBusinessProcessRequest) returns (ProcessLog) {}
+}
+
+//	User Interface
+service UserInterface {
+	//	Rollback Entity Request
+	rpc RollbackEntity(RollbackEntityRequest) returns (Entity) {}
+	// Run a Callout
+	rpc RunCallout(RunCalloutRequest) returns (Callout) {}
+	//	Request Translations List
+	rpc ListTranslations(ListTranslationsRequest) returns (ListTranslationsResponse) {}
+	// Get Default Value
+	rpc GetDefaultValue(GetDefaultValueRequest) returns (Value) {}
+	// Get Lookup Item
+	rpc GetLookupItem(GetLookupItemRequest) returns (LookupItem) {}
+	// List Lookup Item
+	rpc ListLookupItems(ListLookupItemsRequest) returns (ListLookupItemsResponse) {}
+	//	Request Browser Data
+	rpc ListBrowserItems(ListBrowserItemsRequest) returns (ListBrowserItemsResponse) {}
+	// List a References
+	rpc ListReferences(ListReferencesRequest) returns (ListReferencesResponse) {}
+	// Get context Info
+	rpc GetContextInfoValue(GetContextInfoValueRequest) returns (ContextInfoValue) {}
+	// Get Private Access
+	rpc GetPrivateAccess(GetPrivateAccessRequest) returns (PrivateAccess) {}
+	// Create Private Access
+	rpc LockPrivateAccess(LockPrivateAccessRequest) returns (PrivateAccess) {}
+	// Change Private Access
+	rpc UnlockPrivateAccess(UnlockPrivateAccessRequest) returns (PrivateAccess) {}
+	// Get Record Access
+	rpc GetRecordAccess(GetRecordAccessRequest) returns (RecordAccess) {}
+	// Set Record Access
+	rpc SetRecordAccess(SetRecordAccessRequest) returns (RecordAccess) {}
+	//	Request Print Format List
+	rpc ListPrintFormats(ListPrintFormatsRequest) returns (ListPrintFormatsResponse) {}
+	//	Request Report View List
+	rpc ListReportViews(ListReportViewsRequest) returns (ListReportViewsResponse) {}
+	//	Request Drill Tables List
+	rpc ListDrillTables(ListDrillTablesRequest) returns (ListDrillTablesResponse) {}
+	//	Request Report Output
+	rpc GetReportOutput(GetReportOutputRequest) returns (ReportOutput) {}
+	// Add Chat Entry
+	rpc CreateChatEntry(CreateChatEntryRequest) returns (ChatEntry) {}
+	//	Service for get a resource from resource uuid
+	rpc GetResource(GetResourceRequest) returns (stream Resource) {}
+	//	Service for get a resource reference from image, attachment or archive
+	rpc GetResourceReference(GetResourceReferenceRequest) returns (ResourceReference) {}
+	//	Service for get a attachment from table and record uuid
+	rpc GetAttachment(GetAttachmentRequest) returns (Attachment) {}
+	//	Set Preference from field
+	rpc SetPreference(SetPreferenceRequest) returns (Preference) {}
+	//	Delete Preference from field
+	rpc DeletePreference(DeletePreferenceRequest) returns (Empty) {}
+}
+
+//	Workflow management service
+service Workflow {
+	//	List Workflow
+	rpc ListWorkflows(ListWorkflowsRequest) returns (ListWorkflowsResponse) {}
+	//	List Document Actions
+	rpc ListDocumentActions(ListDocumentActionsRequest) returns (ListDocumentActionsResponse) {}
+	//	List Document Statuses
+	rpc ListDocumentStatuses(ListDocumentStatusesRequest) returns (ListDocumentStatusesResponse) {}
+}
+
+//	All related to dashboarding
+service Dashboarding {
+	//	Request Dashboards Content Edit
+	rpc ListDashboards(ListDashboardsRequest) returns (ListDashboardsResponse) {}
+	//	Request Favorites
+	rpc ListFavorites(ListFavoritesRequest) returns (ListFavoritesResponse) {}
+	//	Request Document Statuses
+	rpc ListPendingDocuments(ListPendingDocumentsRequest) returns (ListPendingDocumentsResponse) {}
+}
+
+//	Logger services
+service Logs {
+	//	Request BusinessProcess Activity from current session
+	rpc ListProcessLogs(ListProcessLogsRequest) returns (ListProcessLogsResponse) {}
+	//	Request Record Log List
+	rpc ListEntityLogs(ListEntityLogsRequest) returns (ListEntityLogsResponse) {}
+	//	Request Record Chat List
+	rpc ListEntityChats(ListEntityChatsRequest) returns (ListEntityChatsResponse) {}
+	//	Request Chat Entries List
+	rpc ListChatEntries(ListChatEntriesRequest) returns (ListChatEntriesResponse) {}
+	//	List workflow processes
+	rpc ListWorkflowLogs(ListWorkflowLogsRequest) returns (ListWorkflowLogsResponse) {}
+	//	Request Recent Items
+	rpc ListRecentItems(ListRecentItemsRequest) returns (ListRecentItemsResponse) {}
+}
+
+//	Role Access Request
+message GetRecordAccessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+}
+
+//	Set Access Request
+message SetRecordAccessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	repeated RecordAccessRole record_accesses = 5;
+}
+
+//	Record Access Definition
+message RecordAccess {
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	repeated RecordAccessRole available_roles = 5;
+	repeated RecordAccessRole current_roles = 6;
+}
+
+//	Record Access Stub
+message RecordAccessRole {
+	int32 role_id = 1;
+	string role_uuid = 2;
+	string role_name = 3;
+	bool is_active = 4;
+	bool is_exclude = 5;
+	bool is_read_only = 6;
+	bool is_dependent_entities = 7;
+}
+
+// Request attachment from table and record uuid
+message GetAttachmentRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+}
+
+// Request for set preference
+message SetPreferenceRequest {
+	ClientRequest client_request = 1;
+	string container_uuid = 2;
+	string column_name = 3;
+	bool is_for_current_user = 4;
+	bool is_for_current_client = 5;
+	bool is_for_current_organization = 6;
+	bool is_for_current_container = 7;
+	enum Type {
+		WINDOW = 0;
+		PROCESS = 1;
+		SMART_BROWSER = 2;
+	}
+	Type type = 8;
+	string value = 9;
+}
+
+// Request for delete preference
+message DeletePreferenceRequest {
+	ClientRequest client_request = 1;
+	string container_uuid = 2;
+	string column_name = 3;
+	bool is_for_current_user = 4;
+	bool is_for_current_client = 5;
+	bool is_for_current_organization = 6;
+	bool is_for_current_container = 7;
+	enum Type {
+		WINDOW = 0;
+		PROCESS = 1;
+		SMART_BROWSER = 2;
+	}
+	Type type = 8;
+}
+
+// Preference from window
+message Preference {
+	string container_uuid = 2;
+	string column_name = 3;
+	string value = 4;
+	enum Type {
+		WINDOW = 0;
+		PROCESS = 1;
+		SMART_BROWSER = 2;
+	}
+	Type type = 5;
+	string user_uuid = 6;
+	string client_uuid = 7;
+	string organization_uuid = 8;
+}
+
+// Request for download resource
+message GetResourceRequest {
+	ClientRequest client_request = 1;
+	string resource_uuid = 2;
+	string resource_name = 3;
+	int64 width = 4;
+	int64 height = 5;
+	enum Operation {
+		RESIZE = 0;
+		CROP = 1;
+		FIX = 2;
+		IDENTIFY = 3;
+	}
+	//	Operation
+	Operation operation = 6;
+}
+
+// Request for download resource reference
+message GetResourceReferenceRequest {
+	ClientRequest client_request = 1;
+	int32 image_id = 2;
+}
+
+// Get Entity Request
+message GetReportOutputRequest {
+	string print_format_uuid = 1;
+	string report_view_uuid = 2;
+	bool is_summary = 3;
+	string report_name = 5;
+	string report_type = 6;
+	ClientRequest client_request = 7;
+	// Query
+	Criteria criteria = 8;
+}
+// Create Entity Request
+message CreateEntityRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	repeated KeyValue attributes = 3;
+}
+
+// Create Private Access Request
+message LockPrivateAccessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+}
+
+// Get Entity Request
+message GetEntityRequest {
+	string uuid = 1;
+	int32 id = 2;
+	string table_name = 3;
+	ClientRequest client_request = 4;
+	// Query
+	Criteria criteria = 5;
+}
+
+// Get Private Access Request
+message GetPrivateAccessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+}
+
+// Delete Private Access Request
+message UnlockPrivateAccessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+}
+
+// Private Access Object
+message PrivateAccess {
+	string table_name = 1;
+	int32 id = 2;
+	string uuid = 3;
+	bool is_locked = 4;
+}
+
+//  Empty message
+message RollbackEntityRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string uuid = 3;
+	int32 id = 4;
+	int32 log_id = 5;
+}
+
+// Update Entity Request
+message UpdateEntityRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string uuid = 3;
+	int32 id = 4;
+	repeated KeyValue attributes = 5;
+}
+
+// Delete Entity Request
+message DeleteEntityRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string uuid = 3;
+	int32 id = 4;
+}
+
+// Browsers List
+message ListBrowserItemsResponse {
+	int64 record_count = 1;
+	repeated Entity records = 2;
+	string next_page_token = 3;
+}
+
+// Context Info Value
+message ContextInfoValue {
+	string message_text = 1;
+	string message_tip = 2;
+}
+
+// Get Lookup Item
+message GetLookupItemRequest {
+	int32 id = 1;
+	string uuid = 2;
+	ClientRequest client_request = 3;
+	// Query
+	Criteria criteria = 4;
+}
+
+// Get Default Value Request
+message GetDefaultValueRequest {
+	ClientRequest client_request = 1;
+	// Query
+	string query = 2;
+}
+
+// Get Lookup Item
+message GetContextInfoValueRequest {
+	ClientRequest client_request = 1;
+	int32 id = 2;
+	string uuid = 3;
+	// Query
+	string query = 4;
+}
+
+// Lookup Item Response
+message LookupItem {
+	int32 id = 1;
+	string uuid = 2;
+	string table_name = 3;
+	map<string, Value> values = 4;
+}
+
+// List Lookup Item
+message ListLookupItemsRequest {
+	ClientRequest client_request = 3;
+	// Query
+	Criteria criteria = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// List Lookup Item Response
+message ListLookupItemsResponse {
+	int64 record_count = 1;
+	repeated LookupItem records = 2;
+	string next_page_token = 3;
+}
+
+// List Entities Request
+message ListEntitiesRequest {
+	ClientRequest client_request = 1;
+	// Query
+	Criteria criteria = 2;
+	repeated string columns = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+// List Entities Response
+message ListEntitiesResponse {
+	int64 record_count = 1;
+	repeated Entity records = 2;
+	string next_page_token = 3;
+}
+
+// Callout Request
+message RunCalloutRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string window_uuid = 3;
+	string tab_uuid = 4;
+	string callout = 5;
+	string column_name = 6;
+	Value old_value = 7;
+	Value value = 8;
+	int32 window_no = 9;
+	repeated KeyValue attributes = 10;
+}
+
+// Callout response with data from server
+message Callout {
+	string result = 1;
+	map<string, Value> values = 2;
+}
+
+// BusinessProcess Request
+message RunBusinessProcessRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string process_uuid = 3;
+	string uuid = 4;
+	int32 id = 5;
+	int32 table_selected_id = 6;
+	string report_type = 7;
+	string print_format_uuid = 8;
+	string report_view_uuid = 9;
+	bool is_summary = 10;
+	repeated KeyValue parameters = 11;
+	repeated KeyValueSelection selections = 12;
+}
+
+// BusinessProcess Activity Request
+message ListProcessLogsRequest {
+	ClientRequest client_request = 1;
+	string user_uuid = 2;
+	string instance_uuid = 3;
+	string table_name = 4;
+	int32 id = 5;
+	string uuid = 6;
+	int32 page_size = 7;
+	string page_token = 8;
+}
+
+// BusinessProcess Response List
+message ListProcessLogsResponse {
+	int64 record_count = 1;
+	repeated ProcessLog process_logs = 2;
+	string next_page_token = 3;
+}
+
+// Recent Items Request
+message ListRecentItemsRequest {
+	ClientRequest client_request = 1;
+	string user_uuid = 2;
+	string role_uuid = 3;
+	bool current_session = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// Recent Item
+message RecentItem {
+	string menu_uuid = 1;
+	string menu_name = 2;
+	string menu_description = 3;
+	string window_uuid = 4;
+	string tab_uuid = 5;
+	int32 table_id = 6;
+	string table_name = 7;
+	int32 id = 8;
+	string uuid = 9;
+	string display_name = 10;
+	int64 updated = 11;
+	string reference_uuid = 12;
+	string action = 13;
+}
+
+//	Recent Items List
+message ListRecentItemsResponse {
+	int64 record_count = 1;
+	repeated RecentItem recent_items = 2;
+	string next_page_token = 3;
+}
+
+// Favorites Items Request
+message ListFavoritesRequest {
+	ClientRequest client_request = 1;
+	string user_uuid = 2;
+	int32 user_id = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+// Recent Item
+message Favorite {
+	string menu_uuid = 1;
+	string menu_name = 2;
+	string menu_description = 3;
+	string reference_uuid = 4;
+	string action = 5;
+}
+
+//	Recent Items List
+message ListFavoritesResponse {
+	int64 record_count = 1;
+	repeated Favorite favorites = 2;
+	string next_page_token = 3;
+}
+
+// Translations Request
+message ListTranslationsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string uuid = 3;
+	int32 id = 4;
+	string language = 5;
+	int32 page_size = 6;
+	string page_token = 7;
+}
+
+//	Translations List
+message ListTranslationsResponse {
+	int64 record_count = 1;
+	repeated Translation translations = 2;
+	string next_page_token = 3;
+}
+
+// Document Statuses Request
+message ListPendingDocumentsRequest {
+	ClientRequest client_request = 1;
+	string user_uuid = 2;
+	int32 user_id = 3;
+	string role_uuid = 4;
+	int32 role_id = 5;
+	int32 page_size = 6;
+	string page_token = 7;
+}
+
+// Recent Item
+message PendingDocument {
+	string window_uuid = 1;
+	string form_uuid = 2;
+	string document_name = 3;
+	string document_description = 4;
+	int32 sequence = 5;
+	int64 record_count = 6;
+	// Query
+	Criteria criteria = 7;
+}
+
+//	Recent Items List
+message ListPendingDocumentsResponse {
+	int64 record_count = 1;
+	repeated PendingDocument pending_documents = 2;
+	string next_page_token = 3;
+}
+
+// Dashboards Request
+message ListDashboardsRequest {
+	ClientRequest client_request = 1;
+	string role_uuid = 2;
+	int32 role_id = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+//	Dashboards List
+message ListDashboardsResponse {
+	int64 record_count = 1;
+	repeated Dashboard dashboards = 2;
+	string next_page_token = 3;
+}
+
+// Print Formats Request
+message ListPrintFormatsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string report_view_uuid = 3;
+	string process_uuid = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+//	Print Format List
+message ListPrintFormatsResponse {
+	int64 record_count = 1;
+	repeated PrintFormat print_formats = 2;
+	string next_page_token = 3;
+}
+
+// Record Log Request
+message ListEntityLogsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+//	Record Log List
+message ListEntityLogsResponse {
+	int64 record_count = 1;
+	repeated EntityLog entity_logs = 2;
+	string next_page_token = 3;
+}
+
+// Record Chat Request
+message ListEntityChatsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// Record Chat
+message EntityChat {
+	string chat_uuid = 1;
+	int32 id = 2;
+	string uuid = 3;
+	string table_name = 4;
+	string chat_type_uuid = 5;
+	string description = 6;
+	enum ConfidentialType {
+		PUBLIC = 0;
+		PARTER = 1;
+		INTERNAL = 2;
+	}
+	enum ModerationType {
+		NOT_MODERATED = 0;
+		BEFORE_PUBLISHING = 1;
+		AFTER_PUBLISHING = 2;
+	}
+	ConfidentialType confidential_type = 7;
+	ModerationType moderation_type = 8;
+	int64 log_date = 9;
+}
+
+//	Record Chats List
+message ListEntityChatsResponse {
+	int64 record_count = 1;
+	repeated EntityChat entity_chats = 2;
+	string next_page_token = 3;
+}
+
+// Record Chat Entry Request
+message ListChatEntriesRequest {
+	ClientRequest client_request = 1;
+	string uuid = 2;
+	int32 id = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+// Record Chat
+message ChatEntry {
+	string chat_uuid = 1;
+	int32 id = 2;
+	string uuid = 3;
+	string subject = 4;
+	string character_data = 5;
+	string user_uuid = 6;
+	string user_name = 7;
+	enum ConfidentialType {
+		PUBLIC = 0;
+		PARTER = 1;
+		INTERNAL = 2;
+	}
+	enum ModeratorStatus {
+		NOT_DISPLAYED = 0;
+		PUBLISHED = 1;
+		SUSPICIUS = 2;
+		TO_BE_REVIEWED = 3;
+	}
+	enum ChatEntryType {
+		NOTE_FLAT = 0;
+		FORUM_THREADED = 1;
+		WIKI = 2;
+	}
+	ChatEntryType chat_entry_type = 8;
+	ConfidentialType confidential_type = 9;
+	ModeratorStatus moderator_status = 10;
+	int64 log_date = 11;
+}
+
+// Create Chat Entry Request
+message CreateChatEntryRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	string comment = 5;
+}
+
+//	Record Chats List
+message ListChatEntriesResponse {
+	int64 record_count = 1;
+	repeated ChatEntry chat_entries = 2;
+	string next_page_token = 3;
+}
+
+// Workflow Definition Request
+message ListWorkflowsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+// Workflow Definition
+message WorkflowDefinition {
+	string workflow_uuid = 1;
+	string value = 2;
+	string name = 3;
+	string description = 4;
+	string help = 5;
+	string table_name = 6;
+	string responsible_uuid = 7;
+	string responsible_name = 8;
+	int32 priority = 9;
+	int64 valid_from = 10;
+	bool is_default = 11;
+	bool is_valid = 12;
+	enum DurationUnit {
+		DAY = 0;
+		HOUR = 1;
+		MINUTE = 2;
+		MONTH = 3;
+		SECOND = 4;
+		YEAR = 5;
+	}
+	enum PublishStatus {
+		RELEASED = 0;
+		TEST = 1;
+		UNDER_REVISION = 2;
+		VOID = 3;
+	}
+	PublishStatus publish_status = 13;
+	DurationUnit duration_unit = 14;
+	WorkflowNode start_node = 15;
+	repeated WorkflowNode workflow_nodes = 16;
+}
+
+// Workflow Node
+message WorkflowNode {
+	string node_uuid = 1;
+	string value = 2;
+	string name = 3;
+	string description = 4;
+	string help = 5;
+	string responsible_uuid = 6;
+	string responsible_name = 7;
+	string document_action_value = 8;
+	string document_action_name = 9;
+	int32 priority = 10;
+
+	enum Action {
+		USER_CHOICE = 0;
+		DOCUMENT_ACTION = 1;
+		SUB_WORKFLOW = 2;
+		EMAIL = 3;
+		APPS_PROCESS = 4;
+		SMART_VIEW = 5;
+		APPS_REPORT = 6;
+		SMART_BROWSE = 7;
+		APPS_TASK = 8;
+		SET_VARIABLE = 9;
+		USER_WINDOW = 10;
+		USER_FORM = 11;
+		WAIT_SLEEP = 12;
+	}
+	Action action = 11;
+	repeated WorkflowTransition transitions = 12;
+}
+
+//	Condition for transition
+message WorkflowCondition {
+	int32 sequence = 1;
+	string column_name = 2;
+	string value = 3;
+	enum ConditionType {
+		AND = 0;
+		OR = 1;
+	}
+	enum Operation {
+		EQUAL = 0;
+		NOT_EQUAL = 1;
+		LIKE = 2;
+		GREATER = 4;
+		GREATER_EQUAL = 5;
+		LESS = 6;
+		LESS_EQUAL = 7;
+		BETWEEN = 8;
+		SQL = 9;
+	}
+
+	ConditionType condition_type = 4;
+	Operation operation = 5;
+}
+
+//	Workflow Transition
+message WorkflowTransition {
+	string node_next_uuid = 1;
+	string description = 2;
+	bool is_std_user_workflow = 3;
+	int32 sequence = 4;
+	repeated WorkflowCondition workflow_conditions = 5;
+}
+
+
+//	Workflow Definition List
+message ListWorkflowsResponse {
+	int64 record_count = 1;
+	repeated WorkflowDefinition workflows = 2;
+	string next_page_token = 3;
+}
+
+
+// Valid Document Actions Request
+message ListDocumentActionsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	string document_status = 5;
+	string document_action = 6;
+	int32 page_size = 7;
+	string page_token = 8;
+}
+
+//	Document Actions List
+message ListDocumentActionsResponse {
+	int64 record_count = 1;
+	repeated DocumentAction document_actions = 2;
+	DocumentAction default_document_action = 3;
+	string next_page_token = 4;
+}
+
+// Valid Document Status Request
+message ListDocumentStatusesRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	string document_status = 5;
+	int32 page_size = 6;
+	string page_token = 7;
+}
+
+//	Document Actions List
+message ListDocumentStatusesResponse {
+	int64 record_count = 1;
+	repeated DocumentStatus document_statuses = 2;
+	string next_page_token = 3;
+}
+
+// Workflow Activities Request
+message ListWorkflowLogsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// Workflow Process
+message WorkflowProcess {
+	string process_uuid = 1;
+	string workflow_uuid = 2;
+	string workflow_name = 3;
+	int32 id = 4;
+	string uuid = 5;
+	string table_name = 6;
+	string user_uuid = 7;
+	string user_name = 8;
+	string responsible_uuid = 9;
+	string responsible_name = 10;
+	string text_message = 11;
+	bool processed = 12;
+	enum WorkflowState {
+		RUNNING = 0;
+		COMPLETED = 1;
+		ABORTED = 2;
+		TERMINATED = 3;
+		SUSPENDED = 4;
+		NOT_STARTED = 5;
+
+	}
+	enum Priority {
+		URGENT = 0;
+		HIGH = 1;
+		MEDIUM = 2;
+		LOW = 3;
+		MINOR = 4;
+	}
+	WorkflowState workflow_state = 13;
+	Priority priority = 14;
+	repeated WorkflowEvent workflow_events = 15;
+	int64 log_date = 16;
+}
+
+// Workflow Event Audit
+message WorkflowEvent {
+	string node_uuid = 1;
+	string node_name = 2;
+	int32 id = 3;
+	string uuid = 4;
+	string table_name = 5;
+	string user_uuid = 6;
+	string user_name = 7;
+	string responsible_uuid = 8;
+	string responsible_name = 9;
+	string text_message = 10;
+	int64 time_elapsed = 11;
+	string attribute_name = 12;
+	string old_value = 13;
+	string new_value = 14;
+	enum WorkflowState {
+		RUNNING = 0;
+		COMPLETED = 1;
+		ABORTED = 2;
+		TERMINATED = 3;
+		SUSPENDED = 4;
+		NOT_STARTED = 5;
+
+	}
+	enum EventType {
+		PROCESS_CREATED = 0;
+		PROCESS_COMPLETED = 1;
+		STATE_CHANGED = 2;
+	}
+	WorkflowState workflow_state = 15;
+	EventType event_type = 16;
+	int64 log_date = 17;
+}
+
+//	Workflow Activities List
+message ListWorkflowLogsResponse {
+	int64 record_count = 1;
+	repeated WorkflowProcess workflow_logs = 2;
+	string next_page_token = 3;
+}
+
+// Report _views Request
+message ListReportViewsRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	string process_uuid = 3;
+	int32 page_size = 4;
+	string page_token = 5;
+}
+
+//	Report View List
+message ListReportViewsResponse {
+	int64 record_count = 1;
+	repeated ReportView report_views = 2;
+	string next_page_token = 3;
+}
+
+// Drill table Request
+message ListDrillTablesRequest {
+	ClientRequest client_request = 1;
+	string table_name = 2;
+	int32 page_size = 3;
+	string page_token = 4;
+}
+
+//	Drill Tables List
+message ListDrillTablesResponse {
+	int64 record_count = 1;
+	repeated DrillTable drill_tables = 2;
+	string next_page_token = 3;
+}
+
+// Browser request
+message ListBrowserItemsRequest {
+	string uuid = 1;
+	ClientRequest client_request = 2;
+	Criteria criteria = 3;
+	int32 page_size = 5;
+	string page_token = 6;
+}
+
+// List References
+message ListReferencesRequest {
+	string uuid = 1;
+	string table_name = 2;
+	int32 id = 3;
+	string window_uuid = 4;
+	ClientRequest client_request = 5;
+	int32 page_size = 6;
+	string page_token = 7;
+}
+
+// List References Response
+message ListReferencesResponse {
+	int64 record_count = 1;
+	repeated RecordReferenceInfo references = 2;
+	string next_page_token = 3;
+}

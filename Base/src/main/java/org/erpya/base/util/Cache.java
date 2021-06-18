@@ -16,7 +16,7 @@
  ************************************************************************************/
 package org.erpya.base.util;
 
-import android.support.v4.util.LruCache;
+import androidx.collection.LruCache;
 
 import java.util.Collection;
 import java.util.Iterator;

@@ -2,10 +2,10 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.google.protobuf'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
-        targetSdkVersion 28
+        targetSdkVersion 29
         minSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,7 @@ protobuf {
 }
 
 dependencies {
-    implementation project(path: ':Base')
+    implementation project(path: ':Server')
     // You need to build grpc-java to obtain these libraries below.
     implementation 'io.grpc:grpc-okhttp:1.24.0' // CURRENT_GRPC_VERSION
     implementation 'io.grpc:grpc-protobuf-lite:1.24.0' // CURRENT_GRPC_VERSION

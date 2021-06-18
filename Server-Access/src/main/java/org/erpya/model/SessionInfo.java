@@ -13,10 +13,9 @@
  * You should have received a copy of the GNU General Public License                 *
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.            *
  ************************************************************************************/
-package org.erpya.security.data.model;
+package org.erpya.model;
 
 import org.erpya.base.util.Env;
-import org.erpya.security.util.SecureHandler;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,8 +40,8 @@ public class SessionInfo {
     }
 
     private SessionInfo() {
-        sessionUuid = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#Session_UUID"));
-        sessionName = SecureHandler.getInstance(Env.getContext()).getSecureEngine().decrypt(Env.getContext("#Session_Name"));
+        sessionUuid = Env.getContext("#Session_UUID");
+        sessionName = Env.getContext("#Session_Name");
         isLogged = Env.getContextAsBoolean("#IsLogged");
         sessionId = Env.getContextAsInt("#Session_ID");
         defaultContext = new HashMap<>();
