@@ -151,6 +151,7 @@ public class PriceChecking extends AppCompatActivity {
                             loginFromBarcode(event.getCharacters());
                         } else {
                             ProductPriceWrapper productPrice = PointOfSalesService.getInstance()
+                                    .withConnectionValues(Env.getContext("#PriceChecking_Host"), Env.getContextAsInt("#PriceChecking_Port"))
                                     .getProductPrice(SessionInfo.getInstance().getSessionUuid(), Env.getContext("#PriceChecking_CurrentPOS_UUID"), event.getCharacters());
                             setProductPriceInfo(productPrice);
                         }
@@ -174,6 +175,9 @@ public class PriceChecking extends AppCompatActivity {
         });
         //  Clear values
         clearProductPriceInfo();
+        if(!Util.isEmpty("#PriceChecking_ImageUrl")) {
+            loadImage(Env.getContext("#PriceChecking_ImageUrl"));
+        }
     }
 
     /**
@@ -187,6 +191,7 @@ public class PriceChecking extends AppCompatActivity {
         String token = uri.getQueryParameter(TOKEN);
         String host = uri.getQueryParameter(HOST);
         String imageUrl = uri.getQueryParameter(IMAGE);
+        Env.setContext("#PriceChecking_ImageUrl", imageUrl);
         int port = Integer.parseInt(uri.getQueryParameter(PORT));
         String language = uri.getQueryParameter(LANGUAGE);
         if(!Util.isEmpty(token) && !Util.isEmpty(host)) {
