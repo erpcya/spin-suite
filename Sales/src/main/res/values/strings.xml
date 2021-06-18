@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Spin-Suite</string>
+    <string name="app_name">Price Checking</string>
     <string name="price_checking_upc">UPC / EAN</string>
     <string name="price_checking_unavailable">¡Unavailable!</string>
+    <string name="price_checking_service_connected">¡Service Connected!</string>
 </resources>

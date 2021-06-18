@@ -1,13 +1,16 @@
-package org.erpya.app.retail;
+package org.erpya.app.retail.price;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,17 +18,16 @@ import android.widget.EditText;
 
 import org.erpya.app.sales.R;
 import org.erpya.app.sales.databinding.ActivityPriceCheckingBinding;
-import org.erpya.base.database.support.CouchDBLite_2_0_Support;
 import org.erpya.pos.PointOfSalesService;
 import org.erpya.pos.wrapper.PointOfSalesWrapper;
 import org.erpya.pos.wrapper.ProductPriceWrapper;
 import org.erpya.base.util.DisplayType;
 import org.erpya.base.util.Env;
 import org.erpya.base.util.Util;
-import org.erpya.security.data.model.SessionInfo;
-import org.erpya.security.ui.login.Login;
-import org.erpya.security.util.RSACrypt;
+import org.erpya.model.SessionInfo;
+import org.erpya.access.util.SecurityHelper;
 
+import java.net.URL;
 import java.util.List;
 
 /**
@@ -44,6 +46,19 @@ public class PriceChecking extends AppCompatActivity {
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
+
+    /** Default Token for connection    */
+    private static final String TOKEN = "token";
+    /** Backend Host    */
+    private static final String HOST = "host";
+    /** Backend Port    */
+    private static final String PORT = "port";
+    /** Background Image    */
+    private static final String IMAGE = "image";
+    /** Default App name    */
+    private static final String APP_URI_NAME = "price-checking";
+    /** Backend Language    */
+    private static final String LANGUAGE = "language";
 
     /**
      * Some older devices needs a small delay between UI widget updates
@@ -121,8 +136,6 @@ public class PriceChecking extends AppCompatActivity {
         binding = ActivityPriceCheckingBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         Env.getInstance(getBaseContext());
-        Env.setCurrentSupportedDatabase(CouchDBLite_2_0_Support.class.getName());
-        Env.setCurrentSupportedSecureEngine(RSACrypt.class.getName());
         mVisible = true;
         mControlsView = binding.fullscreenContentControls;
         mContentView = binding.fullscreenContent;
@@ -132,15 +145,18 @@ public class PriceChecking extends AppCompatActivity {
         barcodeReader.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(event.getAction() == KeyEvent.ACTION_MULTIPLE) {
+                if (event.getAction() == KeyEvent.ACTION_MULTIPLE) {
                     try {
-                        ProductPriceWrapper productPrice = PointOfSalesService.getInstance()
-                                .getProductPrice(SessionInfo.getInstance().getSessionUuid(), Env.getContext("#POS_CurrentPOS_UUID"), event.getCharacters());
-                        setProductPriceInfo(productPrice);
+                        if(!Util.isEmpty(event.getCharacters()) && event.getCharacters().startsWith(APP_URI_NAME)) {
+                            loginFromBarcode(event.getCharacters());
+                        } else {
+                            ProductPriceWrapper productPrice = PointOfSalesService.getInstance()
+                                    .getProductPrice(SessionInfo.getInstance().getSessionUuid(), Env.getContext("#PriceChecking_CurrentPOS_UUID"), event.getCharacters());
+                            setProductPriceInfo(productPrice);
+                        }
                     } catch (Exception e) {
                         clearProductPriceInfo();
                         binding.totalAmount.setText(getString(R.string.price_checking_unavailable));
-                        Log.e("PriceChecking", e.getLocalizedMessage());
                     }
                     //  Clear Reader
                     barcodeReader.setText("");
@@ -158,14 +174,88 @@ public class PriceChecking extends AppCompatActivity {
         });
         //  Clear values
         clearProductPriceInfo();
-        if(!SessionInfo.getInstance().isLogged()) {
-            startLogin();
+    }
+
+    /**
+     * Login from a Qr
+     * @param url
+     */
+    private void loginFromBarcode(String url) {
+        barcodeReader.setText("");
+        //  Get parameters
+        Uri uri = Uri.parse(url);
+        String token = uri.getQueryParameter(TOKEN);
+        String host = uri.getQueryParameter(HOST);
+        String imageUrl = uri.getQueryParameter(IMAGE);
+        int port = Integer.parseInt(uri.getQueryParameter(PORT));
+        String language = uri.getQueryParameter(LANGUAGE);
+        if(!Util.isEmpty(token) && !Util.isEmpty(host)) {
+            SecurityHelper.getInstance().withConnectionValues(host, port).loginWithToken(token, language);
+            Env.setContext("#PriceChecking_Host", host);
+            Env.setContext("#PriceChecking_Port", port);
+            loadPointOfSalesValues(host, port);
         }
-        //  Get Point Of Sales UUID
-        if(Util.isEmpty(Env.getContext("#POS_CurrentPOS_UUID"))) {
-            List<PointOfSalesWrapper> sellingPoints = PointOfSalesService.getInstance().getPointOfSalesList(SessionInfo.getInstance().getSessionUuid(), SessionInfo.getInstance().getUserInfo().getUserUuid());
+        //  Load background
+        loadImage(imageUrl);
+        //  Clear data
+        clearProductPriceInfo();
+        binding.totalAmount.setText(getString(R.string.price_checking_service_connected));
+    }
+
+    /**
+     * Load image from URL if exist
+     * @param imageUrl
+     */
+    private void loadImage(String imageUrl) {
+        if(Util.isEmpty(imageUrl)) {
+            return;
+        }
+        //  Run over same thread
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    URL imageUri = new URL(imageUrl);
+                    Bitmap bitmap = BitmapFactory.decodeStream(imageUri.openConnection().getInputStream());
+                    Drawable image = new BitmapDrawable(getApplicationContext().getResources(), bitmap);
+                    //  Using the same thrad ui
+                    setImage(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+    }
+
+    /**
+     * Set image after load
+     * @param image
+     */
+    private void setImage(Drawable image) {
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    binding.fullscreenMainLayout.setBackground(image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /**
+     * Load default values for Point of Sales
+     */
+    private void loadPointOfSalesValues(String host, int port) {
+        if(SessionInfo.getInstance().isLogged()
+                && Util.isEmpty(Env.getContext("#PriceChecking_CurrentPOS_UUID"))) {
+            List<PointOfSalesWrapper> sellingPoints = PointOfSalesService.getInstance()
+                    .withConnectionValues(host, port)
+                    .getPointOfSalesList(SessionInfo.getInstance().getSessionUuid(), SessionInfo.getInstance().getUserInfo().getUserUuid());
             sellingPoints.stream().findFirst().ifPresent(pointOfSales -> {
-                Env.setContext("#POS_CurrentPOS_UUID", pointOfSales.getUuid());
+                Env.setContext("#PriceChecking_CurrentPOS_UUID", pointOfSales.getUuid());
             });
         }
     }
@@ -201,11 +291,6 @@ public class PriceChecking extends AppCompatActivity {
         binding.taxIndicator.setText("");
         binding.totalAmount.setText("");
         binding.displayTotalAmount.setText("");
-    }
-
-    private void startLogin() {
-        Intent intent = new Intent(PriceChecking.this, Login.class);
-        startActivity(intent);
     }
 
     @Override

@@ -1,11 +1,11 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fullscreen_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/fullscreenBackgroundColor"
     android:theme="@style/ThemeOverlay.SpinSuite.FullscreenContainer"
-    tools:context="org.erpya.app.retail.PriceChecking">
+    tools:context="org.erpya.app.retail.price.PriceChecking">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
          is needed to present your content, e.g. VideoView, SurfaceView,
@@ -27,11 +27,11 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.design.widget.TextInputEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/barcode_reader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,6 +51,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="@+id/barcode_reader"
                 tools:layout_editor_absoluteX="16dp" />
@@ -66,6 +67,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/taxIndicator"
                 tools:layout_editor_absoluteX="0dp" />
@@ -81,6 +83,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/totalAmount"
                 tools:layout_editor_absoluteX="0dp" />
@@ -95,6 +98,7 @@
                 android:inputType="textMultiLine"
                 android:paddingRight="5dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+                android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@+id/productName" />
 
             <TextView
@@ -106,6 +110,7 @@
                 android:gravity="right|center_vertical"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/price"
                 app:layout_constraintTop_toBottomOf="@+id/productDescription" />
 
@@ -118,6 +123,7 @@
                 android:gravity="right|center_vertical"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toStartOf="@+id/taxAmount"
                 app:layout_constraintTop_toBottomOf="@+id/labelPrice" />
 
@@ -130,6 +136,7 @@
                 android:paddingRight="5dp"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/productDescription" />
 
@@ -142,10 +149,11 @@
                 android:paddingRight="5dp"
                 android:text="@string/None"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/price" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/fullscreen_content_controls"

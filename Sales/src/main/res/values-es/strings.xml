@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">Spin-Suite</string>
+    <string name="app_name">Consulta de Precio</string>
     <string name="price_checking_upc">Código de Barras</string>
     <string name="price_checking_unavailable">¡No Disponible!</string>
+    <string name="price_checking_service_connected">¡Servicio Conectado!</string>
 </resources>
