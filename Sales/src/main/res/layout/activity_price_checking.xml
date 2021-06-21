@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/ThemeOverlay.SpinSuite.FullscreenContainer"
+    android:background="@drawable/background"
     tools:context="org.erpya.app.retail.price.PriceChecking">
 
     <!-- The primary full-screen view. This can be replaced with whatever view
@@ -35,8 +36,11 @@
                 android:id="@+id/barcode_reader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right|center_vertical"
+                android:gravity="left|center_vertical"
                 android:hint="@string/price_checking_upc"
+                android:background="#00000000"
+                android:foreground="#00000000"
+                android:textColor="#00000000"
                 android:paddingRight="5dp" />
 
             <TextView

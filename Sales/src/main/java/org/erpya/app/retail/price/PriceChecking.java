@@ -146,8 +146,10 @@ public class PriceChecking extends AppCompatActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_MULTIPLE) {
+                    boolean isLogin = false;
                     try {
                         if(!Util.isEmpty(event.getCharacters()) && event.getCharacters().startsWith(APP_URI_NAME)) {
+                            isLogin = true;
                             loginFromBarcode(event.getCharacters());
                         } else {
                             ProductPriceWrapper productPrice = PointOfSalesService.getInstance()
@@ -157,7 +159,11 @@ public class PriceChecking extends AppCompatActivity {
                         }
                     } catch (Exception e) {
                         clearProductPriceInfo();
-                        binding.totalAmount.setText(getString(R.string.price_checking_unavailable));
+                        if(!isLogin) {
+                            binding.totalAmount.setText(getString(R.string.price_checking_unavailable));
+                        } else {
+                            binding.totalAmount.setText(e.getLocalizedMessage());
+                        }
                     }
                     //  Clear Reader
                     barcodeReader.setText("");
