@@ -3,4 +3,5 @@
     <string name="price_checking_upc">Código de Barras</string>
     <string name="price_checking_unavailable">¡No Disponible!</string>
     <string name="price_checking_service_connected">¡Servicio Conectado!</string>
+    <string name="price_checking_currency_rate">Tasa del Día</string>
 </resources>

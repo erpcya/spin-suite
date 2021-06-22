@@ -27,8 +27,10 @@ import org.erpya.base.util.Util;
 import org.erpya.model.SessionInfo;
 import org.erpya.access.util.SecurityHelper;
 
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -282,11 +284,32 @@ public class PriceChecking extends AppCompatActivity {
         } else {
             binding.productDescription.setVisibility(View.VISIBLE);
         }
-        binding.price.setText(productPrice.getCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT).format(productPrice.getPrice()));
+        binding.price.setText(productPrice.getCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getPrice()));
         binding.taxIndicator.setText(productPrice.getTaxIndicator());
-        binding.taxAmount.setText(DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT).format(productPrice.getTaxAmount()));
-        binding.totalAmount.setText(productPrice.getCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT).format(productPrice.getPriceWithTax()));
-        binding.displayTotalAmount.setText(productPrice.getDisplayCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT).format(productPrice.getDisplayPriceWithTax()));
+        binding.taxAmount.setText(DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getTaxAmount()));
+        binding.totalAmount.setText(productPrice.getCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getPriceWithTax()));
+        binding.displayTotalAmount.setText(productPrice.getDisplayCurrencyCode() + " " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getDisplayPriceWithTax()));
+        binding.currencyRate.setText(getString(R.string.price_checking_currency_rate) + ": " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getCurrencyRate()) + getCurrencyRateMessage(productPrice));
+    }
+
+    /**
+     * Get Currency rate message
+     * @param productPrice
+     * @return
+     */
+    public String getCurrencyRateMessage(ProductPriceWrapper productPrice) {
+        if(productPrice.getDisplayPrice().compareTo(Env.ZERO) == 0 || productPrice.getPrice().compareTo(Env.ZERO) == 0) {
+            return "";
+        }
+        //  Get Message
+        String firstCurrency = productPrice.getDisplayCurrencyCode();
+        String secondCurrency = productPrice.getCurrencyCode();
+        if(productPrice.getDisplayPrice().compareTo(productPrice.getPrice()) > 0) {
+            firstCurrency = productPrice.getCurrencyCode();
+            secondCurrency = productPrice.getDisplayCurrencyCode();
+        }
+        //
+        return " ~ (1 " + firstCurrency + " = " + DisplayType.getNumberFormat(Env.getContext(), DisplayType.AMOUNT, "###,###,###,###,###,##0.00").format(productPrice.getCurrencyRate()) + " " + secondCurrency + ")";
     }
 
     /**

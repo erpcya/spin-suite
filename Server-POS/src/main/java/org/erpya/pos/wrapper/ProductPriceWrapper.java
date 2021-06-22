@@ -20,6 +20,7 @@ import org.erpya.pos.util.ServerValueUtil;
 import org.spin.grpc.util.ProductPrice;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.util.Optional;
 
 /**
@@ -60,6 +61,20 @@ public class ProductPriceWrapper {
         wrapper.priceWithTax = wrapper.price.add(getTaxAmount(wrapper.price, wrapper.taxRate));
         wrapper.displayPriceWithTax = wrapper.displayPrice.add(getTaxAmount(wrapper.displayPrice, wrapper.taxRate));
         return wrapper;
+    }
+
+    /**
+     * Get Currency Rate based on display currency and price list currency
+     * @return
+     */
+    public BigDecimal getCurrencyRate() {
+        BigDecimal displayAmount = Optional.ofNullable(displayPrice).orElse(Env.ZERO);
+        BigDecimal priceListAmount = Optional.ofNullable(price).orElse(Env.ZERO);
+        if(displayAmount.compareTo(Env.ZERO) == 0 || priceListAmount.compareTo(Env.ZERO) == 0) {
+            return Env.ZERO;
+        }
+        //  Calculate
+        return displayAmount.max(priceListAmount).divide(displayAmount.min(priceListAmount), MathContext.DECIMAL128);
     }
 
     /**

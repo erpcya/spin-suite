@@ -3,4 +3,5 @@
     <string name="price_checking_upc">UPC / EAN</string>
     <string name="price_checking_unavailable">¡Unavailable!</string>
     <string name="price_checking_service_connected">¡Service Connected!</string>
+    <string name="price_checking_currency_rate">Currency Rate</string>
 </resources>
